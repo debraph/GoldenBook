@@ -13,7 +13,6 @@ namespace GoldenBook.Views
         public AdvertisersPage()
         {
             InitializeComponent();
-            BindingContext = App.Locator.Advertisers;
         }
     }
 }
