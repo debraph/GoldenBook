@@ -40,9 +40,11 @@
     <Compile Include="Views\AdvertisersFormPage.xaml.cs">
       <DependentUpon>AdvertisersFormPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainTabbedPage.cs" />
     <Compile Include="Views\AdvertisersPage.xaml.cs">
       <DependentUpon>AdvertisersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainTabbedPage.xaml.cs">
+      <DependentUpon>MainTabbedPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AdvertisersFormPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
