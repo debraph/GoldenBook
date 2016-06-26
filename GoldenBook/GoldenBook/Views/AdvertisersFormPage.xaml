@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GoldenBook.Views.AdvertisersFormPage"
+             Title="[Form]">
+  
+  <StackLayout VerticalOptions="Center">
+    <Entry Placeholder="[Advertiser]" />
+    <Entry Placeholder="[Sponsor]" />
+    <Editor Text="[Comment]" />
+    <Button Text="[Send]" Clicked="OnSendButton_Clicked" />
+  </StackLayout>
+
+</ContentPage>
