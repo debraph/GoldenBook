@@ -5,7 +5,7 @@
              Title="[Advertisers]">
 
   <Grid VerticalOptions="Center" HorizontalOptions="Center">
-    <Label Text="The list of the advertisers ..."/>
+    <Label Text="{Binding PageDescriptionMessage}"/>
   </Grid>
   
 </ContentPage>
