@@ -15,8 +15,10 @@ namespace GoldenBook.ViewModel.IoC
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<IAdvertisersViewModel, AdvertisersViewModel>();
+            SimpleIoc.Default.Register<IAdvertisersFormViewModel, AdvertisersFormViewModel>();
         }
 
         public IAdvertisersViewModel Advertisers => ServiceLocator.Current.GetInstance<IAdvertisersViewModel>();
+        public IAdvertisersFormViewModel AdvertisersForm => ServiceLocator.Current.GetInstance<IAdvertisersFormViewModel>();
     }
 }

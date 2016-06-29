@@ -1,13 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GoldenBook;assembly=GoldenBook"
              x:Class="GoldenBook.Views.AdvertisersFormPage"
-             Title="[Form]">
+             Title="[Form]"
+             BindingContext="{Binding Source={x:Static local:App.Locator}, Path=AdvertisersForm}">
   
   <StackLayout VerticalOptions="Center">
     <Entry Placeholder="[Advertiser]" />
     <Entry Placeholder="[Sponsor]" />
     <Editor Text="[Comment]" />
+
+    <StackLayout>
+      <Button Text="Take Picture" Command="{Binding TakePictureCommand}" />
+      <Button Text="Select Image from Picture Library" Command="{Binding SelectPictureCommand}" />
+      <Image Source="{Binding ImageSource}" VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+    
     <Button Text="[Send]" Clicked="OnSendButton_Clicked" />
   </StackLayout>
 
