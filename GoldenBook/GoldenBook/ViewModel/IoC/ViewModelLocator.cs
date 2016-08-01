@@ -1,11 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
+using GoldenBook.ServiceContract;
 using GoldenBook.ViewModel.Interfaces;
 using Microsoft.Practices.ServiceLocation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GoldenBook.ViewModel.IoC
 {
@@ -14,9 +10,13 @@ namespace GoldenBook.ViewModel.IoC
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
             SimpleIoc.Default.Register<IAdvertisersViewModel, AdvertisersViewModel>();
+            SimpleIoc.Default.Register<IAdvertisersFormViewModel, AdvertisersFormViewModel>();
         }
 
-        public IAdvertisersViewModel Advertisers => ServiceLocator.Current.GetInstance<IAdvertisersViewModel>();
+        public IAdvertisersViewModel Advertisers         => ServiceLocator.Current.GetInstance<IAdvertisersViewModel>();
+        public IAdvertisersFormViewModel AdvertisersForm => ServiceLocator.Current.GetInstance<IAdvertisersFormViewModel>();
+        public IMediaService MediaService                => ServiceLocator.Current.GetInstance<IMediaService>();
     }
 }
