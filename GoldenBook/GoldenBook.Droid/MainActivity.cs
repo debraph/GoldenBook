@@ -1,15 +1,14 @@
-﻿using System;
-
+﻿
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using XLabs.Ioc;
 using XLabs.Forms;
 using XLabs.Platform.Device;
 using XLabs.Platform.Mvvm;
+using GalaSoft.MvvmLight.Ioc;
+using GoldenBook.ServiceContract;
+using GoldenBook.Droid.Services;
 
 namespace GoldenBook.Droid
 {
@@ -23,6 +22,8 @@ namespace GoldenBook.Droid
             base.OnCreate(bundle);
 
             if (!_initialized) SetIoc();
+
+            RequestedOrientation = ScreenOrientation.Portrait;
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             //Xamarin.FormsMaps.Init(this, bundle);
@@ -40,6 +41,8 @@ namespace GoldenBook.Droid
             .Register <IDisplay> (t => t.Resolve < IDevice > ().Display)
             .Register <IDependencyContainer> (resolverContainer).Register<IXFormsApp> (app);
             Resolver.SetResolver(resolverContainer.GetResolver());
+
+            SimpleIoc.Default.Register<IMediaService, AndroidMediaService>();
 
             _initialized = true;
         }

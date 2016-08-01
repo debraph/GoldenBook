@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceContract\IMediaService.cs" />
     <Compile Include="ViewModel\AdvertisersFormViewModel.cs" />
     <Compile Include="ViewModel\AdvertisersViewModel.cs" />
     <Compile Include="ViewModel\Interfaces\IAdvertisersFormViewModel.cs" />

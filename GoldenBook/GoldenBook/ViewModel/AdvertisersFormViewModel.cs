@@ -1,11 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GoldenBook.ServiceContract;
 using GoldenBook.ViewModel.Interfaces;
-using System;
-using System.Collections.Generic;
+using Microsoft.Practices.ServiceLocation;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -57,6 +55,8 @@ namespace GoldenBook.ViewModel
             }
         }
 
+        private IMediaService MediaService => ServiceLocator.Current.GetInstance<IMediaService>();
+
         private void Setup()
         {
             if (_mediaPicker != null) return;
@@ -87,10 +87,14 @@ namespace GoldenBook.ViewModel
 
                 else
                 {
-                    var mediaFile = t.Result;
-                    ImageSource = ImageSource.FromStream(() => mediaFile.Source);
+                    var result = t.Result;
+                    var needXMirroring = false; //TODO: Determine if the photo is a selfie
 
-                    return mediaFile;
+                    var filePath = MediaService.ProcessCapturedPhoto(result.Path, needXMirroring);
+
+                    ImageSource = ImageSource.FromFile(filePath);
+
+                    return result.Source;
                 }
 
                 return null;

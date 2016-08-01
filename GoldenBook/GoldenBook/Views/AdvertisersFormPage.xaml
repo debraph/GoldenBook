@@ -5,19 +5,20 @@
              x:Class="GoldenBook.Views.AdvertisersFormPage"
              Title="[Form]"
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=AdvertisersForm}">
-  
-  <StackLayout VerticalOptions="Center">
-    <Entry Placeholder="[Advertiser]" />
-    <Entry Placeholder="[Sponsor]" />
-    <Editor Text="[Comment]" />
 
-    <StackLayout>
+  <ScrollView>
+    <StackLayout VerticalOptions="Start" Padding="10">
+      
+      <Entry Placeholder="[Advertiser]" />
+      <Entry Placeholder="[Sponsor]" />
+      <Editor Text="[Comment]" />
+
+      <Button Text="[Send]" Clicked="OnSendButton_Clicked" />
       <Button Text="Take Picture" Command="{Binding TakePictureCommand}" />
       <Button Text="Select Image from Picture Library" Command="{Binding SelectPictureCommand}" />
-      <Image Source="{Binding ImageSource}" VerticalOptions="CenterAndExpand" />
+      <Image Source="{Binding ImageSource}" />
+
     </StackLayout>
-    
-    <Button Text="[Send]" Clicked="OnSendButton_Clicked" />
-  </StackLayout>
+  </ScrollView>
 
 </ContentPage>
