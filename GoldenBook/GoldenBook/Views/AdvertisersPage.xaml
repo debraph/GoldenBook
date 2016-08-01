@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:GoldenBook;assembly=GoldenBook"
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=Advertisers}"
              x:Class="GoldenBook.Views.AdvertisersPage"
-             Title="[Advertisers]">
+             Title="Liste des sponsors">
 
   <Grid VerticalOptions="Center" HorizontalOptions="Center">
     <Label Text="{Binding PageDescriptionMessage}"/>

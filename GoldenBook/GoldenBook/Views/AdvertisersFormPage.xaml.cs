@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoldenBook.ViewModel.Interfaces;
+using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,15 @@ namespace GoldenBook.Views
         public AdvertisersFormPage()
         {
             InitializeComponent();
+
+            PopulateProposersPicker();
+        }
+
+        private IAdvertisersFormViewModel ViewModel => ServiceLocator.Current.GetInstance<IAdvertisersFormViewModel>();
+
+        private void PopulateProposersPicker()
+        {
+            foreach(var proposer in ViewModel.Proposers) proposersPicker.Items.Add(proposer);
         }
 
         void OnSendButton_Clicked(object sender, EventArgs args)

@@ -10,6 +10,8 @@ using Xamarin.Forms;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
 using XLabs.Platform.Services.Media;
+using System;
+using System.Collections.Generic;
 
 namespace GoldenBook.ViewModel
 {
@@ -45,6 +47,20 @@ namespace GoldenBook.ViewModel
         }
 
         private IMediaService MediaService => ServiceLocator.Current.GetInstance<IMediaService>();
+
+        public IEnumerable<string> Proposers
+        {
+            get
+            {
+                return new List<string>()
+                {
+                    "Bruce Wayne",
+                    "Clark Kent",
+                    "Tony Stark",
+                    "Peter Parker",
+                };
+            }
+        }
 
         private void Setup()
         {

@@ -1,10 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using GoldenBook.ViewModel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GoldenBook.ViewModel
 {
@@ -15,6 +10,6 @@ namespace GoldenBook.ViewModel
 
         }
 
-        public string PageDescriptionMessage => "[The list of the advertisers will be printed here ...]";
+        public string PageDescriptionMessage => "TODO";
     }
 }
