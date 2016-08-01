@@ -21,7 +21,6 @@ namespace GoldenBook.ViewModel
         public AdvertisersFormViewModel()
         {
             TakePictureCommand = new RelayCommand(() => TakePicture());
-            SelectPictureCommand = new RelayCommand(() => SelectPicture());
         }
 
         private ImageSource _imageSource = null;
@@ -42,16 +41,6 @@ namespace GoldenBook.ViewModel
             set
             {
                 Set(ref _takePictureCommand, value);
-            }
-        }
-
-        private ICommand _selectPictureCommand = null;
-        public ICommand SelectPictureCommand
-        {
-            get { return _selectPictureCommand; }
-            set
-            {
-                Set(ref _selectPictureCommand, value);
             }
         }
 
@@ -99,29 +88,6 @@ namespace GoldenBook.ViewModel
 
                 return null;
             }, _scheduler);
-        }
-
-        private async void SelectPicture()
-        {
-            await SelectPictureAsync();
-        }
-
-        private async Task SelectPictureAsync()
-        {
-            Setup();
-
-            ImageSource = null;
-            try
-            {
-                var mediaFile = await _mediaPicker.SelectPhotoAsync(new CameraMediaStorageOptions
-                {
-                    DefaultCamera = CameraDevice.Front,
-                    MaxPixelDimension = 400
-                });
-                ImageSource = ImageSource.FromStream(() => mediaFile.Source);
-            }
-
-            catch (System.Exception ex) { Debug.WriteLine(ex.Message); }
         }
     }
 }

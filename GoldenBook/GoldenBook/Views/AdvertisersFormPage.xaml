@@ -13,9 +13,9 @@
       <Entry Placeholder="[Sponsor]" />
       <Editor Text="[Comment]" />
 
-      <Button Text="[Send]" Clicked="OnSendButton_Clicked" />
       <Button Text="Take Picture" Command="{Binding TakePictureCommand}" />
-      <Button Text="Select Image from Picture Library" Command="{Binding SelectPictureCommand}" />
+      <Button Text="[Send]" Clicked="OnSendButton_Clicked" />
+      
       <Image Source="{Binding ImageSource}" />
 
     </StackLayout>

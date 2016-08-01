@@ -13,7 +13,5 @@ namespace GoldenBook.ViewModel.Interfaces
         ImageSource ImageSource { get; set; }
 
         ICommand TakePictureCommand { get; set; }
-
-        ICommand SelectPictureCommand { get; set; }
     }
 }
