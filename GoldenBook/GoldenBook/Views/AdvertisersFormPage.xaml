@@ -9,15 +9,15 @@
   <ScrollView>
     <StackLayout VerticalOptions="Start" Padding="10">
       <StackLayout Padding="0,0,0,10">
-        <Entry Placeholder="Nom du sponsor" Keyboard="Text" />
-        <Entry Placeholder="Prénom du sponsor" Keyboard="Text" />
-        <Entry Placeholder="Adresse e-mail du sponsor" Keyboard="Email" />
-        <Entry Placeholder="Montant du soutien" Keyboard="Numeric" />
-        <Editor Text="Commentaire" Keyboard="Text" />
+        <Entry x:Name="firstNameEntry" Placeholder="Prénom du sponsor" Keyboard="Text" />
+        <Entry x:Name="lastNameEntry" Placeholder="Nom du sponsor" Keyboard="Text" />
+        <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" />
+        <Entry x:Name="amountEntry" Placeholder="Montant du soutien" Keyboard="Numeric" />
+        <Editor x:Name="messageEditor" Text="Message" Keyboard="Text" />
       </StackLayout>
 
       <StackLayout Padding="0,0,0,10">
-        <Label Text="Soumis par :" />
+        <Label Text="Ajouté par :" />
         <Picker x:Name="proposersPicker" />
       </StackLayout>
 
