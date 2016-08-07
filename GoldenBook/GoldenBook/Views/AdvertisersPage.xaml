@@ -6,8 +6,39 @@
              x:Class="GoldenBook.Views.AdvertisersPage"
              Title="Liste des sponsors">
 
-  <Grid VerticalOptions="Center" HorizontalOptions="Center">
-    <Label Text="{Binding PageDescriptionMessage}"/>
+  <Grid>
+
+    <ActivityIndicator HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       IsVisible="False"
+                       IsEnabled="True"
+                       x:Name="syncIndicator"/>
+
+    <ListView x:Name="adsList" ItemSelected="OnSelected" IsPullToRefreshEnabled="true" Refreshing="OnRefresh">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+
+            <StackLayout Orientation="Vertical">
+              <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding FirstName}" />
+                <Label Text="{Binding LastName}" />
+                <Label Text=" // CHF " />
+                <Label Text="{Binding Amount}" />
+                <Label Text="  par " />
+                <Label Text="{Binding AddedBy}" />
+              </StackLayout>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="Message:" />
+                <Label Text="{Binding Message}" />
+              </StackLayout>
+            </StackLayout>
+            
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+    
   </Grid>
   
 </ContentPage>
