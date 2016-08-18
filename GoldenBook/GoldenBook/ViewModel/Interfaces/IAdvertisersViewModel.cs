@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoldenBook.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,8 @@ namespace GoldenBook.ViewModel.Interfaces
     public interface IAdvertisersViewModel
     {
         /// <summary>
-        /// A temp description message used mainly to test MvvmLight...
+        /// Get the list of ads from the Azure services
         /// </summary>
-        string PageDescriptionMessage { get; }
+        Task<List<Ad>> GetRefreshedAdsAsync();
     }
 }
