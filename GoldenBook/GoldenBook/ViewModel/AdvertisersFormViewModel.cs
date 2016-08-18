@@ -46,6 +46,11 @@ namespace GoldenBook.ViewModel
             }
         }
 
+        public byte[] ImageByteArray
+        {
+            get; private set;
+        }
+
         private IMediaService MediaService => ServiceLocator.Current.GetInstance<IMediaService>();
 
         public IEnumerable<string> Proposers
@@ -95,7 +100,10 @@ namespace GoldenBook.ViewModel
                     var result = t.Result;
                     var needXMirroring = false; //TODO: Determine if the photo is a selfie
 
-                    var filePath = MediaService.ProcessCapturedPhoto(result.Path, needXMirroring);
+                    var mediaResult = MediaService.ProcessCapturedPhoto(result.Path, needXMirroring);
+
+                    var filePath = mediaResult.Item1;
+                    ImageByteArray = mediaResult.Item2;
 
                     ImageSource = ImageSource.FromFile(filePath);
 

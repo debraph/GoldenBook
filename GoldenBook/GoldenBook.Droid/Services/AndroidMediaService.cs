@@ -8,7 +8,7 @@ namespace GoldenBook.Droid.Services
 {
     public class AndroidMediaService : IMediaService
     {
-        public string ProcessCapturedPhoto(string filePath, bool needXMirroring = false)
+        public Tuple<string, byte[]> ProcessCapturedPhoto(string filePath, bool needXMirroring = false)
         {
             ExifInterface exif = new ExifInterface(filePath);
             var orientation = (Orientation)exif.GetAttributeInt(ExifInterface.TagOrientation, (int)Orientation.Undefined);
@@ -60,10 +60,12 @@ namespace GoldenBook.Droid.Services
             File file = new File(newFilePath);
             FileOutputStream fos = new FileOutputStream(file);
 
-            fos.Write(stream.GetBuffer());
-            fos.Close();
+            var byteArray = stream.GetBuffer();
 
-            return newFilePath;
+            fos.Write(byteArray);
+            fos.Close();
+            
+            return new Tuple<string, byte[]>(filePath, byteArray);
         }
     }
 }

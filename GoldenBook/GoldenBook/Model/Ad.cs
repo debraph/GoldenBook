@@ -34,5 +34,8 @@ namespace GoldenBook.Model
 
         [JsonProperty("amount")]
         public float Amount { get; set; }
+
+        [JsonProperty("photoId")]
+        public string PhotoId { get; set; }
     }
 }

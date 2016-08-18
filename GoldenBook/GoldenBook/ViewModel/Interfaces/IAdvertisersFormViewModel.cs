@@ -8,6 +8,8 @@ namespace GoldenBook.ViewModel.Interfaces
     {
         ImageSource ImageSource { get; set; }
 
+        byte[] ImageByteArray { get; }
+
         ICommand TakePictureCommand { get; set; }
 
         IEnumerable<string> Proposers { get; }
