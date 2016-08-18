@@ -12,6 +12,18 @@ namespace GoldenBook.ViewModel.Interfaces
 
         ICommand TakePictureCommand { get; set; }
 
+        ICommand SendCommand { get; set; }
+
         IEnumerable<string> Proposers { get; }
+
+        string Firstname { get; set; }
+
+        string Lastname { get; set; }
+
+        string Email { get; set; }
+
+        string Amount { get; set; }
+
+        string Message { get; set; }
     }
 }
