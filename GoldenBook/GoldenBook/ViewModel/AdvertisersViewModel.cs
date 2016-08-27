@@ -45,25 +45,31 @@ namespace GoldenBook.ViewModel
         {
             if (photoId == null) return null;
 
-            CloudBlobContainer container = new CloudBlobContainer(new Uri(Sas));
+            string pictureFilePath   = MediaService.GetFilepath(photoId);
+            string thumbnailFilePath = MediaService.GetFilepath($"{photoId}_thumb");
 
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(photoId);
+            if (pictureFilePath == null || thumbnailFilePath == null)
+            {
+                CloudBlobContainer container = new CloudBlobContainer(new Uri(Sas));
 
-            await blockBlob.FetchAttributesAsync();
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(photoId);
 
-            long fileByteLength = blockBlob.Properties.Length;
+                await blockBlob.FetchAttributesAsync();
 
-            var pictureByteArray = new byte[fileByteLength];
+                long fileByteLength = blockBlob.Properties.Length;
 
-            await blockBlob.DownloadToByteArrayAsync(pictureByteArray, 0);
+                var pictureByteArray = new byte[fileByteLength];
 
-            var filePathCreated = MediaService.SavePictureAndThumbnail(pictureByteArray, photoId);
+                await blockBlob.DownloadToByteArrayAsync(pictureByteArray, 0);
 
-            if (filePathCreated == null) return null;
+                pictureFilePath = MediaService.SavePictureAndThumbnail(pictureByteArray, photoId);
 
-            var thumbnailPath = $"{filePathCreated}_thumb"; // By convention
+                if (pictureFilePath == null) return null;
 
-            ImageSource imageSource = ImageSource.FromFile(thumbnailPath);
+                thumbnailFilePath = $"{pictureFilePath}_thumb"; // By convention
+            }
+
+            ImageSource imageSource = ImageSource.FromFile(thumbnailFilePath);
 
             return imageSource;
         }

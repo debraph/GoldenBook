@@ -20,5 +20,12 @@ namespace GoldenBook.ServiceContract
         /// <param name="needXMirroring">Photos taken with the front camera may need to be mirrored</param>
         /// <returns>A tuple containing he filepath of the new image saved locally and bynary image</returns>
         Tuple<string, byte[]> ProcessCapturedPhoto(string filePath, bool needXMirroring = false);
+
+        /// <summary>
+        /// Try to get the filepath of the given pictureId
+        /// </summary>
+        /// <param name="pictureId">The id of the picture</param>
+        /// <returns>The filepath if the file exist, null if the file doesn't exist</returns>
+        string GetFilepath(string pictureId);
     }
 }

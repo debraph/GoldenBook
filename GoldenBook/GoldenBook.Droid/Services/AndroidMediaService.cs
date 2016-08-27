@@ -8,20 +8,22 @@ namespace GoldenBook.Droid.Services
 {
     public class AndroidMediaService : IMediaService
     {
+        private File AppDirectory                => new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "GoldenBook");
+        private string FilePath(string filename) => $"{AppDirectory.AbsolutePath}{File.Separator}{filename}";
+
         public string SavePictureAndThumbnail(byte[] picture, string filename)
         {
             try
             {
                 var thumbnails = CreateThumbnails(picture);
 
-                File directory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "GoldenBook");
-                if (!directory.Exists())
+                if (!AppDirectory.Exists())
                 {
                     // Try to create the directory if it doesn't exist
-                    if (!directory.Mkdirs()) return null;
+                    if (!AppDirectory.Mkdirs()) return null;
                 }
 
-                var filePath      = $"{directory.AbsolutePath}{File.Separator}{filename}";
+                var filePath      = FilePath(filename);
                 var thumbnailPath = $"{filePath}_thumb";
 
                 if (!WriteFile(picture, filePath)) return null;
@@ -83,6 +85,15 @@ namespace GoldenBook.Droid.Services
             var newFilePath = SavePictureAndThumbnail(imageByteArray, filename);
             
             return new Tuple<string, byte[]>(newFilePath, imageByteArray);
+        }
+
+        public string GetFilepath(string pictureId)
+        {
+            File file = new File(FilePath(pictureId));
+
+            if (file.Exists()) return FilePath(pictureId);
+
+            return null;
         }
 
         private bool WriteFile(byte[] picture, string filePath)
