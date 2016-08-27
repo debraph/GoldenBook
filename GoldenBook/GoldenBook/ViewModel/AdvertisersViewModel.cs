@@ -57,11 +57,13 @@ namespace GoldenBook.ViewModel
 
             await blockBlob.DownloadToByteArrayAsync(pictureByteArray, 0);
 
-            var filePathCreated = MediaService.SavePicture(pictureByteArray, photoId);
+            var filePathCreated = MediaService.SavePictureAndThumbnail(pictureByteArray, photoId);
 
             if (filePathCreated == null) return null;
 
-            ImageSource imageSource = ImageSource.FromFile(filePathCreated);
+            var thumbnailPath = $"{filePathCreated}_thumb"; // By convention
+
+            ImageSource imageSource = ImageSource.FromFile(thumbnailPath);
 
             return imageSource;
         }

@@ -5,12 +5,13 @@ namespace GoldenBook.ServiceContract
     public interface IMediaService
     {
         /// <summary>
-        /// Save a picture in the current app storage for the given filename (no extension is required)
+        /// Save a picture and its thumbnail in the current app storage for the given filename
+        /// A suffix _thumb will be added for the thumbnail path
         /// </summary>
-        /// <param name="picture">The binaries of the picture</param>
+        /// <param name="picture">The picture to save</param>
         /// <param name="filename">The filename without extension</param>
-        /// <returns>The full file path</returns>
-        string SavePicture(byte[] picture, string filename);
+        /// <returns>The full file path of the image</returns>
+        string SavePictureAndThumbnail(byte[] picture, string filename);
 
         /// <summary>
         /// Process a photo captured by the camera
