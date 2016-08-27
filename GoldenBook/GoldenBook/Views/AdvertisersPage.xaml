@@ -17,24 +17,9 @@
     <ListView x:Name="adsList" ItemSelected="OnSelected" IsPullToRefreshEnabled="true" Refreshing="OnRefresh">
       <ListView.ItemTemplate>
         <DataTemplate>
-          <ViewCell>
-
-            <StackLayout Orientation="Vertical">
-              <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding FirstName}" />
-                <Label Text="{Binding LastName}" />
-                <Label Text=" // CHF " />
-                <Label Text="{Binding Amount}" />
-                <Label Text="  par " />
-                <Label Text="{Binding AddedBy}" />
-              </StackLayout>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="Message:" />
-                <Label Text="{Binding Message}" />
-              </StackLayout>
-            </StackLayout>
-            
-          </ViewCell>
+          <ImageCell Text="{Binding DisplayedName}" 
+                     Detail="{Binding DisplayedAmount}" 
+                     ImageSource="{Binding Picture}" />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>

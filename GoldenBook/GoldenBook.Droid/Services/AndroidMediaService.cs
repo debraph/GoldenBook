@@ -8,6 +8,35 @@ namespace GoldenBook.Droid.Services
 {
     public class AndroidMediaService : IMediaService
     {
+        public string SavePicture(byte[] picture, string filename)
+        {
+            try
+            {
+                File directory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "GoldenBook");
+                if (!directory.Exists())
+                {
+                    // Try to create the directory if it doesn't exist
+                    if (!directory.Mkdirs()) return null;
+                }
+
+                var filePath = $"{directory.AbsolutePath}{File.Separator}{filename}.jpg";
+
+                File file = new File(filePath);
+
+                if (file.Exists()) return filePath; // The file already exist in the directory
+
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.Write(picture);
+                fos.Close();
+
+                return filePath;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
         public Tuple<string, byte[]> ProcessCapturedPhoto(string filePath, bool needXMirroring = false)
         {
             ExifInterface exif = new ExifInterface(filePath);

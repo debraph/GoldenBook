@@ -5,6 +5,14 @@ namespace GoldenBook.ServiceContract
     public interface IMediaService
     {
         /// <summary>
+        /// Save a picture in the current app storage for the given filename (no extension is required)
+        /// </summary>
+        /// <param name="picture">The binaries of the picture</param>
+        /// <param name="filename">The filename without extension</param>
+        /// <returns>The full file path</returns>
+        string SavePicture(byte[] picture, string filename);
+
+        /// <summary>
         /// Process a photo captured by the camera
         /// </summary>
         /// <param name="filePath">The path of the photo captured and saved locally</param>

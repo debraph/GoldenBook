@@ -17,7 +17,6 @@ namespace GoldenBook.Views
         }
 
         private IAdvertisersViewModel ViewModel   => BindingContext as IAdvertisersViewModel;
-        private MobileServiceClient MobileService => new MobileServiceClient("https://goldenbook.azurewebsites.net");
 
         protected override async void OnAppearing()
         {

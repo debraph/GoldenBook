@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using Xamarin.Forms;
 
 namespace GoldenBook.Model
 {
@@ -37,5 +38,14 @@ namespace GoldenBook.Model
 
         [JsonProperty("photoId")]
         public string PhotoId { get; set; }
+
+        [JsonIgnore]
+        public ImageSource Picture { get; set; }
+
+        [JsonIgnore]
+        public string DisplayedName => $"{FirstName} {LastName}";
+
+        [JsonIgnore]
+        public string DisplayedAmount => $"CHF {Amount}.-";
     }
 }
