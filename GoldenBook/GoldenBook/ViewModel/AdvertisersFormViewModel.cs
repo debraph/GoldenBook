@@ -54,13 +54,13 @@ namespace GoldenBook.ViewModel
 
         public string Firstname
         {
-            get { return _firstname ?? "Bruce"; }
+            get { return _firstname; }
             set { Set(ref _firstname, value); }
         }
 
         public string Lastname
         {
-            get { return _lastname ?? "Wayne"; }
+            get { return _lastname; }
             set { Set(ref _lastname, value); }
         }
 

@@ -12,7 +12,7 @@ using GoldenBook.Droid.Services;
 
 namespace GoldenBook.Droid
 {
-    [Activity(Label = "GoldenBook", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Livre d'or", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : XFormsApplicationDroid
     {
         private bool _initialized = false;
