@@ -19,6 +19,11 @@ namespace GoldenBook.Views
         public AdvertisersFormPage()
         {
             InitializeComponent();
+
+            BindingContextChanged += (object sender, EventArgs e) => 
+            {
+                MessagingCenter.Send<Page>(this, "BindingContextChanged.AdvertisersFormViewModel");
+            };
         }
     }
 }

@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Command;
 using GoldenBook.ServiceContract;
 using GoldenBook.ViewModel.Interfaces;
 using Microsoft.Practices.ServiceLocation;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -11,7 +10,6 @@ using XLabs.Ioc;
 using XLabs.Platform.Device;
 using XLabs.Platform.Services.Media;
 using System;
-using System.Collections.Generic;
 using GoldenBook.Model;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
@@ -32,12 +30,19 @@ namespace GoldenBook.ViewModel
         private ICommand _takePictureCommand;
         private ICommand _sendCommand;
 
+        private Page _page;
+
         private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
         public AdvertisersFormViewModel()
         {
             TakePictureCommand = new RelayCommand(() => TakePicture());
             SendCommand = new RelayCommand(() => Send());
+
+            MessagingCenter.Subscribe<Page>(this, "BindingContextChanged.AdvertisersFormViewModel", (sender) => 
+            {
+                _page = sender;
+            });
         }
 
         public string Firstname
@@ -110,12 +115,12 @@ namespace GoldenBook.ViewModel
             if (!result) amount = 0.0f;
 
             string photoId = null;
-            if (ImageByteArray != null)
+            if(ImageByteArray != null)
             {
                 var image = ImageByteArray;
                 photoId = await InsertImage(image);
 
-                if (photoId == null) return; //TODO Show an error dialog 
+                if (photoId == null) return;
             }
 
             Ad ad = new Ad()
@@ -130,9 +135,11 @@ namespace GoldenBook.ViewModel
                 PhotoId = photoId,
             };
 
-            InsertAd(ad);
+            await InsertAd(ad);
 
-            //TODO: Check that the ad has been added and show a dialog
+            // On success the object is updated by the service
+            if (ad.Id != null) _page?.DisplayAlert("Succès de l'envoi", "Merci de votre soutien !", "Ok");
+            else               _page?.DisplayAlert("Echec de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
         }
 
         private async Task<string> InsertImage(byte[] image)
@@ -157,14 +164,21 @@ namespace GoldenBook.ViewModel
             }
             catch (Exception ex)
             {
-                //TODO: Manage the exception
+                await _page?.DisplayAlert("Erreur lors de l'envoi de la photo", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
                 return null;
             }
         }
 
-        private async void InsertAd(Ad ad)
+        private async Task InsertAd(Ad ad)
         {
-            await MobileService.GetTable<Ad>().InsertAsync(ad); //TODO: Move it into a dedicated class (RestClient)
+            try
+            {
+                await MobileService.GetTable<Ad>().InsertAsync(ad); //TODO: Move it into a dedicated class (RestClient)
+            }
+            catch (Exception ex)
+            {
+                await _page?.DisplayAlert("Erreur lors de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
+            }
         }
 
         private MobileServiceClient MobileService => new MobileServiceClient("https://goldenbook.azurewebsites.net");
