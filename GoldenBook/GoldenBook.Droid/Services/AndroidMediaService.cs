@@ -8,14 +8,43 @@ namespace GoldenBook.Droid.Services
 {
     public class AndroidMediaService : IMediaService
     {
-        public string ProcessCapturedPhoto(string filePath, bool needXMirroring = false)
+        private File AppDirectory                => new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "GoldenBook");
+        private string FilePath(string filename) => $"{AppDirectory.AbsolutePath}{File.Separator}{filename}";
+
+        public string SavePictureAndThumbnail(byte[] picture, string filename)
+        {
+            try
+            {
+                var thumbnails = CreateThumbnails(picture);
+
+                if (!AppDirectory.Exists())
+                {
+                    // Try to create the directory if it doesn't exist
+                    if (!AppDirectory.Mkdirs()) return null;
+                }
+
+                var filePath      = FilePath(filename);
+                var thumbnailPath = $"{filePath}_thumb";
+
+                if (!WriteFile(picture, filePath)) return null;
+                if (!WriteFile(thumbnails, thumbnailPath)) return null;
+
+                return filePath;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Tuple<string, byte[]> ProcessCapturedPhoto(string filePath, bool needXMirroring = false)
         {
             ExifInterface exif = new ExifInterface(filePath);
             var orientation = (Orientation)exif.GetAttributeInt(ExifInterface.TagOrientation, (int)Orientation.Undefined);
 
-            Bitmap resultBitmap = BitmapFactory.DecodeFile(filePath);
+            Bitmap bitmap = BitmapFactory.DecodeFile(filePath);
             Matrix mtx = new Matrix();
-
+            
             switch (orientation)
             {
                 case Orientation.Rotate180:
@@ -39,31 +68,71 @@ namespace GoldenBook.Droid.Services
                     break;
             }
 
-            if(needXMirroring) mtx.PreScale(1, -1);
+            if (needXMirroring) mtx.PreScale(1, -1);
 
-            resultBitmap = Bitmap.CreateBitmap(resultBitmap, 0, 0, resultBitmap.Width, resultBitmap.Height, mtx, false);
+            bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, mtx, false);
             mtx.Dispose();
             mtx = null;
 
             System.IO.MemoryStream stream = new System.IO.MemoryStream();
-            var compressionResult = resultBitmap.Compress(Bitmap.CompressFormat.Jpeg, 80, stream);
-
-            File directory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "GoldenBook");
-            if (!directory.Exists())
-            {
-                if (!directory.Mkdirs()) return null;
-            }
+            var compressionResult = bitmap.Compress(Bitmap.CompressFormat.Jpeg, 80, stream);
 
             var id = Guid.NewGuid().ToString("n");
-            var newFilePath = $"{directory.AbsolutePath}{File.Separator}photo_{id}.jpg";
+            var filename = $"capture-{id}";
 
-            File file = new File(newFilePath);
-            FileOutputStream fos = new FileOutputStream(file);
+            var imageByteArray = stream.GetBuffer();
 
-            fos.Write(stream.GetBuffer());
-            fos.Close();
+            var newFilePath = SavePictureAndThumbnail(imageByteArray, filename);
+            
+            return new Tuple<string, byte[]>(newFilePath, imageByteArray);
+        }
 
-            return newFilePath;
+        public string GetFilepath(string pictureId)
+        {
+            File file = new File(FilePath(pictureId));
+
+            if (file.Exists()) return FilePath(pictureId);
+
+            return null;
+        }
+
+        private bool WriteFile(byte[] picture, string filePath)
+        {
+            try
+            {
+                File file = new File(filePath);
+
+                if (file.Exists()) return true;
+
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.Write(picture);
+                fos.Close();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private byte[] CreateThumbnails(byte[] picture)
+        {
+            Bitmap bitmap = BitmapFactory.DecodeByteArray(picture, 0, picture.Length);
+
+            int maxHeight = 200;
+            int maxWidth = 200;
+            float scale = Math.Min(((float)maxHeight / bitmap.Width), ((float)maxWidth / bitmap.Height));
+
+            Matrix matrix = new Matrix();
+            matrix.PostScale(scale, scale);
+
+            var thumbnail = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
+
+            System.IO.MemoryStream stream = new System.IO.MemoryStream();
+            var compressionResult = thumbnail.Compress(Bitmap.CompressFormat.Jpeg, 80, stream);
+
+            return stream.GetBuffer();
         }
     }
 }

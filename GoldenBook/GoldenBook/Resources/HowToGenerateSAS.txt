@@ -1,0 +1,11 @@
+﻿1. Set the context
+PS > $context = New-AzureStorageContext -StorageAccountName "accountName" -StorageAccountKey "key"
+
+2. Create a new container
+PS > New-AzureStorageContainer container-name-of-your-choice -Permission Off -Context $context
+
+3. Save the current DateTime
+PS > $now = Get-Date
+
+4. Create the SAS token
+PS > New-AzureStorageContainerSASToken -Name golden-book-photos -Permission rwdl -ExpiryTime $now.AddDays(1.0) -Context $context -FullUri
