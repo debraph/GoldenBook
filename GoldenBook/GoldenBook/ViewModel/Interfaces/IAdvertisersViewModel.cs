@@ -12,6 +12,11 @@ namespace GoldenBook.ViewModel.Interfaces
         /// <summary>
         /// Get the list of ads from the Azure services
         /// </summary>
-        Task<List<Ad>> GetRefreshedAdsAsync();
+        Task RefreshAdsAsync();
+
+        /// <summary>
+        /// The list of Ads not refreshed from the web services
+        /// </summary>
+        List<Ad> Ads { get; }
     }
 }

@@ -22,7 +22,17 @@ namespace GoldenBook.Views
         {
             base.OnAppearing();
 
-            if(adsList.ItemsSource == null) await RefreshItems(true);
+            if (adsList.ItemsSource == null)
+            {
+                if (ViewModel.Ads != null)
+                {
+                    adsList.ItemsSource = ViewModel.Ads;
+                }
+                else
+                {
+                    await RefreshItems(true);
+                }
+            }
         }
 
         public async void OnRefresh(object sender, EventArgs e)
@@ -49,7 +59,8 @@ namespace GoldenBook.Views
         {
             using (var scope = new ActivityIndicatorDisposable(syncIndicator, showActivityIndicator))
             {
-                adsList.ItemsSource = await ViewModel.GetRefreshedAdsAsync();
+                await ViewModel.RefreshAdsAsync();
+                adsList.ItemsSource = ViewModel.Ads;
             }
         }
     }
