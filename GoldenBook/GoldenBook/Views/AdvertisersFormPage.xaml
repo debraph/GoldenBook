@@ -24,10 +24,13 @@
           <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" Text="{Binding Email}" />
           <Entry x:Name="amountEntry" Placeholder="Montant du soutien" Keyboard="Numeric" Text="{Binding Amount}" />
           <Entry x:Name="addedByEntry" Placeholder="Ajouté par" Keyboard="Text" Text="{Binding AddedBy}" />
-          <Editor x:Name="messageEditor" Text="{Binding Message}" Keyboard="Text" />
+          <StackLayout Padding="0,12,0,0" Orientation="Vertical">
+            <Label x:Name="MessageLabel" Text="Message :" />
+            <Editor x:Name="messageEditor" Text="{Binding Message}" Keyboard="Text" />
+          </StackLayout>
         </StackLayout>
 
-        <Grid Padding="0">
+        <Grid Padding="0,10,0,0">
           <ActivityIndicator HorizontalOptions="Center"
                              VerticalOptions="Center"
                              IsRunning="{Binding IsActivityIndicatorVisible}"
