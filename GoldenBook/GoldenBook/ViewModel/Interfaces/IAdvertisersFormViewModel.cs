@@ -14,8 +14,6 @@ namespace GoldenBook.ViewModel.Interfaces
 
         ICommand SendCommand { get; set; }
 
-        IEnumerable<string> Proposers { get; }
-
         string Firstname { get; set; }
 
         string Lastname { get; set; }
@@ -25,5 +23,7 @@ namespace GoldenBook.ViewModel.Interfaces
         string Amount { get; set; }
 
         string Message { get; set; }
+
+        string AddedBy { get; set; }
     }
 }

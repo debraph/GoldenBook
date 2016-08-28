@@ -26,6 +26,7 @@ namespace GoldenBook.ViewModel
         private string _email;
         private string _amount;
         private string _message;
+        private string _addedBy;
         private ImageSource _imageSource;
         private IMediaPicker _mediaPicker = null;
         private ICommand _takePictureCommand;
@@ -63,6 +64,12 @@ namespace GoldenBook.ViewModel
             set { Set(ref _amount, value); }
         }
 
+        public string AddedBy
+        {
+            get { return _addedBy; }
+            set { Set(ref _addedBy, value); }
+        }
+
         public string Message
         {
             get { return _message; }
@@ -96,32 +103,20 @@ namespace GoldenBook.ViewModel
 
         private IMediaService MediaService => ServiceLocator.Current.GetInstance<IMediaService>();
 
-        public IEnumerable<string> Proposers
-        {
-            get
-            {
-                return new List<string>()
-                {
-                    "Bruce Wayne",
-                    "Clark Kent",
-                    "Tony Stark",
-                    "Peter Parker",
-                };
-            }
-        }
-
         private async void Send()
         {
-            string addedBy = "TODO";
-
             float amount;
             var result = float.TryParse(Amount, out amount);
             if (!result) amount = 0.0f;
 
-            var image = ImageByteArray;
-            var photoId = await InsertImage(image);
+            string photoId = null;
+            if (ImageByteArray != null)
+            {
+                var image = ImageByteArray;
+                photoId = await InsertImage(image);
 
-            if (photoId == null) return;
+                if (photoId == null) return; //TODO Show an error dialog 
+            }
 
             Ad ad = new Ad()
             {
@@ -131,7 +126,7 @@ namespace GoldenBook.ViewModel
                 Message = Message,
                 CreatedAt = DateTime.Now,
                 Amount = amount,
-                AddedBy = addedBy,
+                AddedBy = AddedBy,
                 PhotoId = photoId,
             };
 

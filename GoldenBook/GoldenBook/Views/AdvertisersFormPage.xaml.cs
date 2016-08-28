@@ -19,15 +19,6 @@ namespace GoldenBook.Views
         public AdvertisersFormPage()
         {
             InitializeComponent();
-
-            PopulateProposersPicker();
-        }
-
-        private IAdvertisersFormViewModel ViewModel => ServiceLocator.Current.GetInstance<IAdvertisersFormViewModel>();
-
-        private void PopulateProposersPicker()
-        {
-            foreach(var proposer in ViewModel.Proposers) proposersPicker.Items.Add(proposer);
         }
     }
 }
