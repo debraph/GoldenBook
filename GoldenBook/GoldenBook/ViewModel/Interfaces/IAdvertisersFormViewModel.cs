@@ -25,5 +25,7 @@ namespace GoldenBook.ViewModel.Interfaces
         string Message { get; set; }
 
         string AddedBy { get; set; }
+
+        bool IsActivityIndicatorVisible { get; }
     }
 }

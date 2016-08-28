@@ -14,28 +14,34 @@ namespace GoldenBook.ViewModel
 {
     public class AdvertisersViewModel : ViewModelBase, IAdvertisersViewModel
     {
+        private List<Ad> _ads;
+
         public AdvertisersViewModel()
         { }
 
         private MobileServiceClient MobileService => new MobileServiceClient("https://goldenbook.azurewebsites.net");
         private string Sas => "https://goldenbook.blob.core.windows.net/golden-book-photos?sv=2015-04-05&sr=c&sig=hnDVgepWpsAbX7Lj9o1h%2FgN7t3Va3A3meBGoMejx%2Fwc%3D&se=2017-08-18T19%3A13%3A55Z&sp=rwdl";
 
-        public async Task<List<Ad>> GetRefreshedAdsAsync()
+        public List<Ad> Ads
+        {
+            get { return _ads; }
+            private set { Set(ref _ads, value); }
+        }
+
+        public async Task RefreshAdsAsync()
         {
             try
             {
-                List<Ad> ads = await MobileService.GetTable<Ad>().OrderByDescending(a => a.CreatedAt).ToListAsync();
+                Ads = await MobileService.GetTable<Ad>().OrderByDescending(a => a.CreatedAt).ToListAsync();
 
-                foreach(Ad ad in ads)
+                foreach(Ad ad in Ads)
                 {
                     ad.Picture = await LoadPicture(ad.PhotoId);
                 }
-
-                return ads;
             }
             catch (Exception ex)
             {
-                return new List<Ad>();
+                Ads = new List<Ad>();
             }
         }
 
