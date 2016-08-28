@@ -6,25 +6,43 @@
              Title="Saisie d'un sponsor"
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=AdvertisersForm}">
 
-  <ScrollView>
-    <StackLayout VerticalOptions="Start" Padding="10">
-      
-      <StackLayout Padding="0,0,0,10">
-        <Entry x:Name="firstNameEntry" Placeholder="Prénom du sponsor" Keyboard="Text" Text="{Binding Firstname}" />
-        <Entry x:Name="lastNameEntry" Placeholder="Nom du sponsor" Keyboard="Text" Text="{Binding Lastname}" />
-        <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" Text="{Binding Email}" />
-        <Entry x:Name="amountEntry" Placeholder="Montant du soutien" Keyboard="Numeric" Text="{Binding Amount}" />
-        <Entry x:Name="addedByEntry" Placeholder="Ajouté par" Keyboard="Text" Text="{Binding AddedBy}" />
-        <Editor x:Name="messageEditor" Text="{Binding Message}" Keyboard="Text" />
-      </StackLayout>
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:BooleanInverterConverter x:Key="booleanInverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
 
-      <StackLayout Padding="0">
-        <Button Text="Prendre une photo" Command="{Binding TakePictureCommand}" />
-        <Button Text="Envoyer" Command="{Binding SendCommand}" />
-        <Image Source="{Binding ImageSource}" />
+  <Grid>
+    
+    <ScrollView>
+
+      <StackLayout VerticalOptions="Start" Padding="10">
+
+        <StackLayout Padding="0,0,0,10">
+          <Entry x:Name="firstNameEntry" Placeholder="Prénom du sponsor" Keyboard="Text" Text="{Binding Firstname}" />
+          <Entry x:Name="lastNameEntry" Placeholder="Nom du sponsor" Keyboard="Text" Text="{Binding Lastname}" />
+          <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" Text="{Binding Email}" />
+          <Entry x:Name="amountEntry" Placeholder="Montant du soutien" Keyboard="Numeric" Text="{Binding Amount}" />
+          <Entry x:Name="addedByEntry" Placeholder="Ajouté par" Keyboard="Text" Text="{Binding AddedBy}" />
+          <Editor x:Name="messageEditor" Text="{Binding Message}" Keyboard="Text" />
+        </StackLayout>
+
+        <Grid Padding="0">
+          <ActivityIndicator HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             IsRunning="{Binding IsActivityIndicatorVisible}"
+                             x:Name="syncIndicator"/>
+        
+          <StackLayout Padding="0" IsVisible="{Binding IsActivityIndicatorVisible, Converter={StaticResource booleanInverter}}">
+            <Button Text="Prendre une photo" Command="{Binding TakePictureCommand}" />
+            <Button Text="Envoyer" Command="{Binding SendCommand}" />
+            <Image Source="{Binding ImageSource}" />
+          </StackLayout>
+        </Grid>
+
       </StackLayout>
-      
-    </StackLayout>
-  </ScrollView>
+    </ScrollView>
+  
+  </Grid>
 
 </ContentPage>

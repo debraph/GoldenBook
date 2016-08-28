@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Converters\BooleanInverterConverter.cs" />
     <Compile Include="Helpers\ActivityIndicatorDisposable.cs" />
     <Compile Include="Model\Ad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
