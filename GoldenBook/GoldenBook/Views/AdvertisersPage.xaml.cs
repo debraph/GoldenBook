@@ -51,7 +51,7 @@ namespace GoldenBook.Views
         {
             var ad = e.SelectedItem as Ad;
 
-            await Navigation.PushModalAsync(new AdsDetailPage(ad), true);
+            await Navigation.PushAsync(new AdsDetailPage(ad), true);
         }
 
         private async Task RefreshItems(bool showActivityIndicator)

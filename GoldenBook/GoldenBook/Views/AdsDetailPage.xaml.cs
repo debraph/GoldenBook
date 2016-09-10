@@ -19,11 +19,6 @@ namespace GoldenBook.Views
             BindingContext = ad;
             LoadImageSource(ad);
         }
-
-        private async void OnCloseButtonClicked(object sender, EventArgs e)
-        {
-            await Navigation.PopModalAsync(true);
-        }
         
         private IMediaService MediaService => ServiceLocator.Current.GetInstance<IMediaService>();
 

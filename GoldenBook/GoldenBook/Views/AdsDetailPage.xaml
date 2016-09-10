@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GoldenBook.Views.AdsDetailPage"
-             x:Name="myAdsDetailPage">
+             x:Name="myAdsDetailPage" 
+             Title="Détail d'un sponsor">
 
   <Grid Padding="20">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
     
     <Grid HorizontalOptions="Start" VerticalOptions="Start" Grid.Row="0">
@@ -41,8 +41,6 @@
     </Grid>
 
     <Image Grid.Row="1" BindingContext="{x:Reference Name=myAdsDetailPage}" Source="{Binding CurrentImageSource}" HorizontalOptions="Center" />
-
-    <Button Grid.Row="2" Text="Fermer" Clicked="OnCloseButtonClicked" />
 
   </Grid>
   
