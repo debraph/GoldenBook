@@ -1,31 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿
 using Foundation;
+using GalaSoft.MvvmLight.Ioc;
+using GoldenBook.iOS.Services;
+using GoldenBook.ServiceContract;
 using UIKit;
+using XLabs.Forms;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
+using XLabs.Platform.Mvvm;
 
 namespace GoldenBook.iOS
 {
-    // The UIApplicationDelegate for the application. This class is responsible for launching the 
-    // User Interface of the application, as well as listening (and optionally responding) to 
-    // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : XFormsApplicationDelegate
     {
-        //
-        // This method is invoked when the application has loaded and is ready to run. In this 
-        // method you should instantiate the window, load the UI into it and then make the window
-        // visible.
-        //
-        // You have 17 seconds to return from this method, or iOS will terminate your application.
-        //
+        private bool _initialized = false;
+        
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            if (!_initialized) SetIoc();
+
+            Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init(); // Initialize the Azure web services for iOS
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        void SetIoc()
+        {
+            var resolverContainer = new SimpleContainer();
+
+            var app = new XFormsAppiOS();
+            app.Init(this);
+
+            resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
+            .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
+            .Register<IDependencyContainer>(resolverContainer).Register<IXFormsApp>(app);
+            Resolver.SetResolver(resolverContainer.GetResolver());
+
+            SimpleIoc.Default.Register<IMediaService, IOSMediaService>();
+
+            _initialized = true;
         }
     }
 }
