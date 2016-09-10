@@ -47,5 +47,8 @@ namespace GoldenBook.Model
 
         [JsonIgnore]
         public string DisplayedAmount => $"CHF {Amount}.-";
+
+        [JsonIgnore]
+        public string DisplayedDate => $"{CreatedAt.Day}.{CreatedAt.Month}.{CreatedAt.Year}";
     }
 }

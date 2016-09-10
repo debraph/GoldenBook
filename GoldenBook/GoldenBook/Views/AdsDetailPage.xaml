@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GoldenBook.Views.AdsDetailPage"
              x:Name="myAdsDetailPage" 
-             Title="Détail d'un sponsor">
+             Title="{Binding DisplayedName}">
 
   <Grid Padding="20">
     <Grid.RowDefinitions>
@@ -21,22 +21,18 @@
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
-      <Label Text="Nom du sponsor:" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" />
-      <Label Text="{Binding DisplayedName}" Grid.Row="0" Grid.Column="1"/>
+      <Label Text="Montant du don :" Grid.Row="1" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="{Binding DisplayedAmount}" Grid.Row="1" Grid.Column="1"/>
 
-      <Label Text="Montant:" Grid.Row="1" Grid.Column="0" FontAttributes="Bold" />
-      <Label Text="{Binding Amount}" Grid.Row="1" Grid.Column="1"/>
+      <Label Text="Date :" Grid.Row="2" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="{Binding DisplayedDate}" Grid.Row="2" Grid.Column="1"/>
 
-      <Label Text="Date:" Grid.Row="2" Grid.Column="0" FontAttributes="Bold" />
-      <Label Text="{Binding CreatedAt}" Grid.Row="2" Grid.Column="1"/>
-
-      <Label Text="Parrain:" Grid.Row="3" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="Ajouté par :" Grid.Row="3" Grid.Column="0" FontAttributes="Bold" />
       <Label Text="{Binding AddedBy}" Grid.Row="3" Grid.Column="1"/>
 
-      <Label Text="Message:" Grid.Row="4" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="Message :" Grid.Row="4" Grid.Column="0" FontAttributes="Bold" />
       <Label Text="{Binding Message}" Grid.Row="4" Grid.Column="1"/>
     </Grid>
 

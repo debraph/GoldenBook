@@ -22,7 +22,7 @@
           <Entry x:Name="firstNameEntry" Placeholder="Prénom du sponsor" Keyboard="Text" Text="{Binding Firstname}" />
           <Entry x:Name="lastNameEntry" Placeholder="Nom du sponsor" Keyboard="Text" Text="{Binding Lastname}" />
           <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" Text="{Binding Email}" />
-          <Entry x:Name="amountEntry" Placeholder="Montant du soutien" Keyboard="Numeric" Text="{Binding Amount}" />
+          <Entry x:Name="amountEntry" Placeholder="Montant du don" Keyboard="Numeric" Text="{Binding Amount}" />
           <Entry x:Name="addedByEntry" Placeholder="Ajouté par" Keyboard="Text" Text="{Binding AddedBy}" />
           <StackLayout Padding="0,12,0,0" Orientation="Vertical">
             <Label x:Name="MessageLabel" Text="Message :" />
