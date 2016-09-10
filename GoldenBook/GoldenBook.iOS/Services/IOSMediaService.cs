@@ -1,6 +1,9 @@
-﻿using GoldenBook.ServiceContract;
+﻿using CoreGraphics;
+using Foundation;
+using GoldenBook.ServiceContract;
 using System;
 using System.IO;
+using UIKit;
 
 namespace GoldenBook.iOS.Services
 {
@@ -65,7 +68,37 @@ namespace GoldenBook.iOS.Services
 
         private byte[] CreateThumbnails(byte[] picture)
         {
-            return picture;
+            float maxHeight = 200.0f;
+            float maxWidth = 200.0f;
+
+            var pictureData = NSData.FromArray(picture);
+            var sourceImage = UIImage.LoadFromData(pictureData);
+
+            var sourceSize = sourceImage.Size;
+            var maxResizeFactor = Math.Max(maxWidth / sourceSize.Width, maxHeight / sourceSize.Height);
+
+            if (maxResizeFactor > 1) return UIImageToByteArray(sourceImage);
+
+            var width = maxResizeFactor * sourceSize.Width;
+            var height = maxResizeFactor * sourceSize.Height;
+
+            UIGraphics.BeginImageContext(new CGSize(width, height));
+            sourceImage.Draw(new CGRect(0, 0, width, height));
+
+            var resultImage = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+
+            return UIImageToByteArray(resultImage);
+        }
+
+        private byte[] UIImageToByteArray(UIImage image)
+        {
+            using (NSData imageData = image.AsPNG())
+            {
+                var myByteArray = new byte[imageData.Length];
+                System.Runtime.InteropServices.Marshal.Copy(imageData.Bytes, myByteArray, 0, Convert.ToInt32(imageData.Length));
+                return myByteArray;
+            }
         }
 
         #endregion
