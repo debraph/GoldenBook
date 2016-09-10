@@ -45,7 +45,15 @@ namespace GoldenBook.iOS.Services
 
         public Tuple<string, byte[]> ProcessCapturedPhoto(string filePath, bool needXMirroring = false)
         {
-            return null;
+            UIImage image = UIImage.FromFile(filePath);
+            var imageByteArray = UIImageToByteArray(image);
+
+            var id = Guid.NewGuid().ToString("n");
+            var filename = $"capture-{id}";
+            
+            var newFilePath = SavePictureAndThumbnail(imageByteArray, filename);
+
+            return new Tuple<string, byte[]>(newFilePath, imageByteArray);
         }
 
         #region Private methods
