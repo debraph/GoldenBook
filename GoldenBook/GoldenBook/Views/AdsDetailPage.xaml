@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GoldenBook.Views.AdsDetailPage"
+             x:Name="myAdsDetailPage">
+
+  <Grid Padding="20">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    
+    <Grid HorizontalOptions="Start" VerticalOptions="Start" Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Label Text="Nom du sponsor:" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="{Binding DisplayedName}" Grid.Row="0" Grid.Column="1"/>
+
+      <Label Text="Montant:" Grid.Row="1" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="{Binding Amount}" Grid.Row="1" Grid.Column="1"/>
+
+      <Label Text="Date:" Grid.Row="2" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="{Binding CreatedAt}" Grid.Row="2" Grid.Column="1"/>
+
+      <Label Text="Parrain:" Grid.Row="3" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="{Binding AddedBy}" Grid.Row="3" Grid.Column="1"/>
+
+      <Label Text="Message:" Grid.Row="4" Grid.Column="0" FontAttributes="Bold" />
+      <Label Text="{Binding Message}" Grid.Row="4" Grid.Column="1"/>
+    </Grid>
+
+    <Image Grid.Row="1" BindingContext="{x:Reference Name=myAdsDetailPage}" Source="{Binding CurrentImageSource}" HorizontalOptions="Center" />
+
+    <Button Grid.Row="2" Text="Fermer" Clicked="OnCloseButtonClicked" />
+
+  </Grid>
+  
+  
+</ContentPage>

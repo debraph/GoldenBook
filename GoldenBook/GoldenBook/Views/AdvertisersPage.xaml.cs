@@ -3,7 +3,6 @@ using System;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Microsoft.WindowsAzure.MobileServices;
 using GoldenBook.ViewModel.Interfaces;
 using GoldenBook.Helpers;
 
@@ -48,11 +47,11 @@ namespace GoldenBook.Views
             }
         }
 
-        public void OnSelected(object sender, SelectedItemChangedEventArgs e)
+        public async void OnSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var ad = e.SelectedItem as Ad;
 
-            //TODO: Do something with the ad!
+            await Navigation.PushModalAsync(new AdsDetailPage(ad), true);
         }
 
         private async Task RefreshItems(bool showActivityIndicator)
