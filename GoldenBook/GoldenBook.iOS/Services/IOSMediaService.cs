@@ -40,7 +40,7 @@ namespace GoldenBook.iOS.Services
 
         public string GetFilepath(string pictureId)
         {
-            return null;
+            return File.Exists(FilePath(pictureId)) ? FilePath(pictureId) : null;
         }
 
         public Tuple<string, byte[]> ProcessCapturedPhoto(string filePath, bool needXMirroring = false)
