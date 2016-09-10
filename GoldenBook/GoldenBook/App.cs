@@ -18,7 +18,7 @@ namespace GoldenBook
         public App()
         {
             // The root page of your application
-            MainPage = new MainTabbedPage();
+            MainPage = new NavigationPage(new MainTabbedPage());
         }
 
         protected override void OnStart()

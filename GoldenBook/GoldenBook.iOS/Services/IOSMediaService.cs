@@ -40,6 +40,7 @@ namespace GoldenBook.iOS.Services
 
         public string GetFilepath(string pictureId)
         {
+            if (pictureId == null) return null;
             return File.Exists(FilePath(pictureId)) ? FilePath(pictureId) : null;
         }
 

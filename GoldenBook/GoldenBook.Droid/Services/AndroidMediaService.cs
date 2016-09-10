@@ -89,6 +89,8 @@ namespace GoldenBook.Droid.Services
 
         public string GetFilepath(string pictureId)
         {
+            if (pictureId == null) return null;
+
             File file = new File(FilePath(pictureId));
 
             if (file.Exists()) return FilePath(pictureId);
