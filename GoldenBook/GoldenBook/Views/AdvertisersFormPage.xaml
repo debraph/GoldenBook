@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GoldenBook;assembly=GoldenBook"
+             xmlns:conv="clr-namespace:GoldenBook.Converters;assembly=GoldenBook"
              xmlns:behaviors="clr-namespace:GoldenBook.Behaviors;assembly=GoldenBook"
              x:Class="GoldenBook.Views.AdvertisersFormPage"
              Title="Saisie d'un sponsor"
@@ -9,7 +10,7 @@
 
   <ContentPage.Resources>
     <ResourceDictionary>
-      <local:BooleanInverterConverter x:Key="booleanInverter" />
+      <conv:BooleanInverterConverter x:Key="booleanInverter" />
     </ResourceDictionary>
   </ContentPage.Resources>
 

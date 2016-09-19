@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace GoldenBook
+namespace GoldenBook.Converters
 {
     public class BooleanInverterConverter : IValueConverter
     {
@@ -9,9 +9,10 @@ namespace GoldenBook
         {
             return !(bool)value;
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return !(bool)value;
+            throw new NotImplementedException();
         }
     }
 }
