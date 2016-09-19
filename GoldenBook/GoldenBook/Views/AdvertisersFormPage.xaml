@@ -22,7 +22,7 @@
         <StackLayout Padding="0,0,0,10">
           <Entry x:Name="firstNameEntry" Placeholder="Prénom du sponsor" Keyboard="Text" Text="{Binding Firstname}">
             <Entry.Behaviors>
-              <behaviors:TextValidatorBehavior x:Name="firstNameValidator" />
+              <behaviors:TextValidatorBehavior x:Name="firstNameValidator" /> <!-- At least the first name must be filled -->
             </Entry.Behaviors>
           </Entry>
           <Entry x:Name="lastNameEntry" Placeholder="Nom du sponsor" Keyboard="Text" Text="{Binding Lastname}" />
@@ -31,7 +31,11 @@
               <behaviors:EmailValidatorBehavior x:Name="emailValidator" IsNullAllowed="True" />
             </Entry.Behaviors>
           </Entry>
-          <Entry x:Name="amountEntry" Placeholder="Montant du don" Keyboard="Numeric" Text="{Binding Amount}" />
+          <Entry x:Name="amountEntry" Placeholder="Montant du don" Keyboard="Numeric" Text="{Binding Amount}">
+            <Entry.Behaviors>
+              <behaviors:NumberValidatorBehavior x:Name="amountValidator" />
+            </Entry.Behaviors>
+          </Entry>
           <Entry x:Name="addedByEntry" Placeholder="Ajouté par" Keyboard="Text" Text="{Binding AddedBy}" />
           <StackLayout Padding="0,12,0,0" Orientation="Vertical">
             <Label x:Name="MessageLabel" Text="Message :" />
@@ -55,6 +59,7 @@
                   <MultiTrigger.Conditions>
                     <BindingCondition Binding="{Binding Source={x:Reference firstNameValidator}, Path=IsValid}" Value="true"></BindingCondition>
                     <BindingCondition Binding="{Binding Source={x:Reference emailValidator}, Path=IsValid}" Value="true"></BindingCondition>
+                    <BindingCondition Binding="{Binding Source={x:Reference amountValidator}, Path=IsValid}" Value="true"></BindingCondition>
                   </MultiTrigger.Conditions>
                   <Setter Property="IsEnabled" Value="True"></Setter>
                 </MultiTrigger>
