@@ -3,11 +3,11 @@ using Xamarin.Forms;
 
 namespace GoldenBook.Converters
 {
-    public class BooleanInverterConverter : IValueConverter
+    public class NullToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return !(bool)value;
+            return value != null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

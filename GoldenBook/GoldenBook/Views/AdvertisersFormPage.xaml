@@ -2,13 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GoldenBook;assembly=GoldenBook"
+             xmlns:conv="clr-namespace:GoldenBook.Converters;assembly=GoldenBook"
+             xmlns:behaviors="clr-namespace:GoldenBook.Behaviors;assembly=GoldenBook"
              x:Class="GoldenBook.Views.AdvertisersFormPage"
              Title="Saisie d'un sponsor"
              BindingContext="{Binding Source={x:Static local:App.Locator}, Path=AdvertisersForm}">
 
   <ContentPage.Resources>
     <ResourceDictionary>
-      <local:BooleanInverterConverter x:Key="booleanInverter" />
+      <conv:BooleanInverterConverter x:Key="booleanInverter" />
     </ResourceDictionary>
   </ContentPage.Resources>
 
@@ -19,10 +21,22 @@
       <StackLayout VerticalOptions="Start" Padding="10">
 
         <StackLayout Padding="0,0,0,10">
-          <Entry x:Name="firstNameEntry" Placeholder="Prénom du sponsor" Keyboard="Text" Text="{Binding Firstname}" />
+          <Entry x:Name="firstNameEntry" Placeholder="Prénom du sponsor" Keyboard="Text" Text="{Binding Firstname}">
+            <Entry.Behaviors>
+              <behaviors:TextValidatorBehavior x:Name="firstNameValidator" /> <!-- At least the first name must be filled -->
+            </Entry.Behaviors>
+          </Entry>
           <Entry x:Name="lastNameEntry" Placeholder="Nom du sponsor" Keyboard="Text" Text="{Binding Lastname}" />
-          <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" Text="{Binding Email}" />
-          <Entry x:Name="amountEntry" Placeholder="Montant du don" Keyboard="Numeric" Text="{Binding Amount}" />
+          <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" Text="{Binding Email}">
+            <Entry.Behaviors>
+              <behaviors:EmailValidatorBehavior x:Name="emailValidator" IsNullAllowed="True" />
+            </Entry.Behaviors>
+          </Entry>
+          <Entry x:Name="amountEntry" Placeholder="Montant du don" Keyboard="Numeric" Text="{Binding Amount}">
+            <Entry.Behaviors>
+              <behaviors:NumberValidatorBehavior x:Name="amountValidator" />
+            </Entry.Behaviors>
+          </Entry>
           <Entry x:Name="addedByEntry" Placeholder="Ajouté par" Keyboard="Text" Text="{Binding AddedBy}" />
           <StackLayout Padding="0,12,0,0" Orientation="Vertical">
             <Label x:Name="MessageLabel" Text="Message :" />
@@ -38,7 +52,20 @@
         
           <StackLayout Padding="0" IsVisible="{Binding IsActivityIndicatorVisible, Converter={StaticResource booleanInverter}}">
             <Button Text="Prendre une photo" Command="{Binding TakePictureCommand}" />
-            <Button Text="Envoyer" Command="{Binding SendCommand}" />
+            
+            <!-- The property IsEnabled is ignored when the Button is directly binded to an ICommand, so the command is called from the Click event -->
+            <Button Text="Envoyer" IsEnabled="False" Clicked="OnButtonSendClicked" >
+              <Button.Triggers>
+                <MultiTrigger TargetType="Button">
+                  <MultiTrigger.Conditions>
+                    <BindingCondition Binding="{Binding Source={x:Reference firstNameValidator}, Path=IsValid}" Value="true"></BindingCondition>
+                    <BindingCondition Binding="{Binding Source={x:Reference emailValidator}, Path=IsValid}" Value="true"></BindingCondition>
+                    <BindingCondition Binding="{Binding Source={x:Reference amountValidator}, Path=IsValid}" Value="true"></BindingCondition>
+                  </MultiTrigger.Conditions>
+                  <Setter Property="IsEnabled" Value="True"></Setter>
+                </MultiTrigger>
+              </Button.Triggers>
+            </Button>
             <Image Source="{Binding ImageSource}" />
           </StackLayout>
         </Grid>
