@@ -40,6 +40,7 @@
     <Compile Include="Behaviors\NumberValidatorBehavior.cs" />
     <Compile Include="Behaviors\TextValidatorBehavior.cs" />
     <Compile Include="Converters\BooleanInverterConverter.cs" />
+    <Compile Include="Converters\NullToBooleanConverter.cs" />
     <Compile Include="Helpers\ActivityIndicatorDisposable.cs" />
     <Compile Include="Model\Ad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

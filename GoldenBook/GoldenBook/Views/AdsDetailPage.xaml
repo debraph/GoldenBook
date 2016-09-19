@@ -1,9 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:GoldenBook.Converters;assembly=GoldenBook"
              x:Class="GoldenBook.Views.AdsDetailPage"
              x:Name="myAdsDetailPage" 
              Title="{Binding DisplayedName}">
+  
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <conv:NullToBooleanConverter x:Key="nullToBoolean" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
 
   <Grid Padding="20">
     <Grid.RowDefinitions>
@@ -32,8 +39,8 @@
       <Label Text="Ajouté par :" Grid.Row="3" Grid.Column="0" FontAttributes="Bold" />
       <Label Text="{Binding AddedBy}" Grid.Row="3" Grid.Column="1"/>
 
-      <Label Text="Message :" Grid.Row="4" Grid.Column="0" FontAttributes="Bold" />
-      <Label Text="{Binding Message}" Grid.Row="4" Grid.Column="1"/>
+      <Label Text="Message :" Grid.Row="4" Grid.Column="0" FontAttributes="Bold" IsVisible="{Binding Message, Converter={StaticResource nullToBoolean}}" />
+      <Label Text="{Binding Message}" Grid.Row="4" Grid.Column="1" IsVisible="{Binding Message, Converter={StaticResource nullToBoolean}}" />
     </Grid>
 
     <Image Grid.Row="1" BindingContext="{x:Reference Name=myAdsDetailPage}" Source="{Binding CurrentImageSource}" HorizontalOptions="Center" />
