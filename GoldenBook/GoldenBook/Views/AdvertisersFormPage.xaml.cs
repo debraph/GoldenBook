@@ -21,5 +21,12 @@ namespace GoldenBook.Views
 
             advertisersViewModel?.RefreshAdsAsync();
         }
+
+        private IAdvertisersFormViewModel ViewModel => ServiceLocator.Current.GetInstance<IAdvertisersFormViewModel>();
+
+        private void OnButtonSendClicked(object sender, EventArgs e)
+        {
+            ViewModel?.SendCommand?.Execute(null);
+        }
     }
 }

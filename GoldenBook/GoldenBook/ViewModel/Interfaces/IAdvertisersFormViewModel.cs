@@ -10,9 +10,9 @@ namespace GoldenBook.ViewModel.Interfaces
 
         byte[] ImageByteArray { get; }
 
-        ICommand TakePictureCommand { get; set; }
+        ICommand TakePictureCommand { get; }
 
-        ICommand SendCommand { get; set; }
+        ICommand SendCommand { get; }
 
         string Firstname { get; set; }
 

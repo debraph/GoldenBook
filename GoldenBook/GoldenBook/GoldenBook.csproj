@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Behaviors\EmailValidatorBehavior.cs" />
+    <Compile Include="Behaviors\TextValidatorBehavior.cs" />
     <Compile Include="Converters\BooleanInverterConverter.cs" />
     <Compile Include="Helpers\ActivityIndicatorDisposable.cs" />
     <Compile Include="Model\Ad.cs" />

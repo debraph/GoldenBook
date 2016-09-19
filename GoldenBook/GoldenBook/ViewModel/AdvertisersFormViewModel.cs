@@ -102,13 +102,13 @@ namespace GoldenBook.ViewModel
         public ICommand TakePictureCommand
         {
             get { return _takePictureCommand; }
-            set { Set(ref _takePictureCommand, value); }
+            private set { Set(ref _takePictureCommand, value); }
         }
 
         public ICommand SendCommand
         {
             get { return _sendCommand; }
-            set { Set(ref _sendCommand, value); }
+            private set { Set(ref _sendCommand, value); }
         }
 
         public byte[] ImageByteArray { get; private set; }
