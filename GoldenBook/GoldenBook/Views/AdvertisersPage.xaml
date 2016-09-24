@@ -17,7 +17,7 @@
     <ListView x:Name="adsList" ItemSelected="OnSelected" IsPullToRefreshEnabled="true" Refreshing="OnRefresh">
       <ListView.ItemTemplate>
         <DataTemplate>
-          <ImageCell Text="{Binding DisplayedName}" 
+          <ImageCell Text="{Binding Name}" 
                      Detail="{Binding DisplayedAmount}" 
                      ImageSource="{Binding Picture}" />
         </DataTemplate>

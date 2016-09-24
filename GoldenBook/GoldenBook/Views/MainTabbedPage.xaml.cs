@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GoldenBook.Helpers;
+using GoldenBook.ViewModel;
 
 using Xamarin.Forms;
 
@@ -16,6 +13,16 @@ namespace GoldenBook.Views
 
             Children.Add(new AdvertisersFormPage());
             Children.Add(new AdvertisersPage());
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (string.IsNullOrEmpty(Settings.FirstName) || string.IsNullOrEmpty(Settings.LastName))
+            {
+                await Navigation.PushModalAsync(new UserConfigurationPage(), true);
+            }
         }
     }
 }

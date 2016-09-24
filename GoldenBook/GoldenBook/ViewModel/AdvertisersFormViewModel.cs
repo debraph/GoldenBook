@@ -14,17 +14,16 @@ using GoldenBook.Model;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
 using Microsoft.WindowsAzure.MobileServices;
+using GoldenBook.Helpers;
 
 namespace GoldenBook.ViewModel
 {
     public class AdvertisersFormViewModel : ViewModelBase, IAdvertisersFormViewModel
     {
-        private string _firstname;
-        private string _lastname;
+        private string _name;
         private string _email;
         private string _amount;
         private string _message;
-        private string _addedBy;
         private bool _isActivityIndicatorVisible = false;
         private ImageSource _imageSource;
         private IMediaPicker _mediaPicker = null;
@@ -52,16 +51,10 @@ namespace GoldenBook.ViewModel
             set { Set(ref _isActivityIndicatorVisible, value); }
         }
 
-        public string Firstname
+        public string Name
         {
-            get { return _firstname; }
-            set { Set(ref _firstname, value); }
-        }
-
-        public string Lastname
-        {
-            get { return _lastname; }
-            set { Set(ref _lastname, value); }
+            get { return _name; }
+            set { Set(ref _name, value); }
         }
 
         public string Email
@@ -74,12 +67,6 @@ namespace GoldenBook.ViewModel
         {
             get { return _amount; }
             set { Set(ref _amount, value); }
-        }
-
-        public string AddedBy
-        {
-            get { return _addedBy; }
-            set { Set(ref _addedBy, value); }
         }
 
         public string Message
@@ -136,27 +123,42 @@ namespace GoldenBook.ViewModel
 
                 Ad ad = new Ad()
                 {
-                    FirstName = Firstname,
-                    LastName = Lastname,
+                    Name = Name,
                     Email = Email,
                     Message = Message,
                     CreatedAt = DateTime.Now,
                     Amount = amount,
-                    AddedBy = AddedBy,
+                    AddedBy = $"{Settings.FirstName} {Settings.LastName}",
                     PhotoId = photoId,
                 };
 
                 await InsertAd(ad);
 
                 // On success the object is updated by the service
-                if (ad.Id != null) _page?.DisplayAlert("Succès de l'envoi", "Merci de votre soutien !", "Ok");
-                else               _page?.DisplayAlert("Echec de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
+                if (ad.Id != null)
+                {
+                    _page?.DisplayAlert("Succès de l'envoi", "Merci de votre soutien !", "Ok");
+                    ResetForm();
+                }
+                else
+                {
+                    _page?.DisplayAlert("Echec de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
+                }
             }
             catch { }
             finally
             {
                 IsActivityIndicatorVisible = false;
             }
+        }
+
+        private void ResetForm()
+        {
+            Name        = null;
+            Email       = null;
+            Amount      = null;
+            Message     = null;
+            ImageSource = null;
         }
 
         private async Task<string> InsertImage(byte[] image)

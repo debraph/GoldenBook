@@ -14,17 +14,13 @@ namespace GoldenBook.ViewModel.Interfaces
 
         ICommand SendCommand { get; }
 
-        string Firstname { get; set; }
-
-        string Lastname { get; set; }
+        string Name { get; set; }
 
         string Email { get; set; }
 
         string Amount { get; set; }
 
         string Message { get; set; }
-
-        string AddedBy { get; set; }
 
         bool IsActivityIndicatorVisible { get; }
     }

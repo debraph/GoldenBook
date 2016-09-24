@@ -32,8 +32,8 @@ namespace GoldenBook.Behaviors
 
         void HandleTextChanged(object sender, TextChangedEventArgs e)
         {
-            IsValid = (Regex.IsMatch(e.NewTextValue, emailRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250))) 
-                || (string.IsNullOrEmpty(e.NewTextValue) && IsNullAllowed);
+            IsValid = (string.IsNullOrEmpty(e.NewTextValue) && IsNullAllowed)
+                || (Regex.IsMatch(e.NewTextValue, emailRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)));
 
             ((Entry)sender).TextColor = IsValid ? Color.Default : Color.Red;
         }

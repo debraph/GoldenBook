@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GoldenBook;assembly=GoldenBook"
+             xmlns:behaviors="clr-namespace:GoldenBook.Behaviors;assembly=GoldenBook"
+             x:Class="GoldenBook.Views.UserConfigurationPage"
+             Title="Configuration initiale"
+             BindingContext="{Binding Source={x:Static local:App.Locator}, Path=UserConfiguration}">
+  
+  <Grid VerticalOptions="Center" HorizontalOptions="Center">
+    
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    
+    <StackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,0,0,20">
+      <Label Text="Configuration initiale" FontAttributes="Bold" />
+    </StackLayout>
+
+    <Label Text="Ton prénom" Grid.Row="1" Grid.Column="0" />
+    <Entry Text="{Binding FirstName}" Keyboard="Text" Grid.Row="1" Grid.Column="1">
+      <Entry.Behaviors>
+        <behaviors:TextValidatorBehavior x:Name="firstNameValidator" />
+      </Entry.Behaviors>
+    </Entry>
+
+    <Label Text="Ton nom" Grid.Row="2" Grid.Column="0" />
+    <Entry Text="{Binding LastName}" Keyboard="Text" Grid.Row="2" Grid.Column="1">
+      <Entry.Behaviors>
+        <behaviors:TextValidatorBehavior x:Name="lastNameValidator" />
+      </Entry.Behaviors>
+    </Entry>
+
+    <Label Text="Le mot de passe" Grid.Row="3" Grid.Column="0" />
+    <Entry Text="{Binding Password}" Grid.Row="3" Grid.Column="1" IsPassword="True" />
+    <Label Text="{Binding ErrorMessage}" TextColor="Red" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding IsErrorMessageDisplayed}"/>
+
+    <Button Text="Continuer" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="False" Clicked="OnButtonContinueClicked">
+      <Button.Triggers>
+        <MultiTrigger TargetType="Button">
+          <MultiTrigger.Conditions>
+            <BindingCondition Binding="{Binding Source={x:Reference firstNameValidator}, Path=IsValid}" Value="true"></BindingCondition>
+            <BindingCondition Binding="{Binding Source={x:Reference lastNameValidator}, Path=IsValid}" Value="true"></BindingCondition>
+          </MultiTrigger.Conditions>
+          <Setter Property="IsEnabled" Value="True"></Setter>
+        </MultiTrigger>
+      </Button.Triggers>
+    </Button>
+
+  </Grid>
+  
+</ContentPage>
