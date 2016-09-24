@@ -19,17 +19,18 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
     <Label Text="Ton prénom" Grid.Row="0" Grid.Column="0" />
-    <Entry Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1">
+    <Entry Text="{Binding FirstName}" Keyboard="Text" Grid.Row="0" Grid.Column="1">
       <Entry.Behaviors>
         <behaviors:TextValidatorBehavior x:Name="firstNameValidator" />
       </Entry.Behaviors>
     </Entry>
 
     <Label Text="Ton nom" Grid.Row="1" Grid.Column="0" />
-    <Entry Text="{Binding LastName}" Grid.Row="1" Grid.Column="1">
+    <Entry Text="{Binding LastName}" Keyboard="Text" Grid.Row="1" Grid.Column="1">
       <Entry.Behaviors>
         <behaviors:TextValidatorBehavior x:Name="lastNameValidator" />
       </Entry.Behaviors>
@@ -37,8 +38,9 @@
 
     <Label Text="Le mot de passe" Grid.Row="2" Grid.Column="0" />
     <Entry Text="{Binding Password}" Grid.Row="2" Grid.Column="1" IsPassword="True" />
+    <Label Text="{Binding ErrorMessage}" TextColor="Red" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding IsErrorMessageDisplayed}"/>
 
-    <Button Text="Continuer" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="False" Clicked="OnButtonContinueClicked">
+    <Button Text="Continuer" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="False" Clicked="OnButtonContinueClicked">
       <Button.Triggers>
         <MultiTrigger TargetType="Button">
           <MultiTrigger.Conditions>

@@ -42,6 +42,7 @@
     <Compile Include="Converters\BooleanInverterConverter.cs" />
     <Compile Include="Converters\NullToBooleanConverter.cs" />
     <Compile Include="Helpers\ActivityIndicatorDisposable.cs" />
+    <Compile Include="Helpers\Crypto.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Model\Ad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

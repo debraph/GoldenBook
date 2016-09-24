@@ -13,6 +13,7 @@ namespace GoldenBook.ViewModel
         private string _firstName;
         private string _lastName;
         private string _password;
+        private string _errorMessage;
 
         public UserConfigurationViewModel()
         {
@@ -43,20 +44,31 @@ namespace GoldenBook.ViewModel
             set { Set(ref _password, value); }
         }
 
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                Set(ref _errorMessage, value);
+                RaisePropertyChanged(nameof(IsErrorMessageDisplayed));
+            }
+        }
+
+        public bool IsErrorMessageDisplayed => ErrorMessage != null;
+
         private void Continue()
         {
-            if(IsPasswordCorrect())
+            if(Crypto.IsPasswordCorrect(Password))
             {
                 Settings.FirstName = FirstName;
                 Settings.LastName  = LastName;
                 
                 Application.Current.MainPage.Navigation.PopModalAsync();
             }
-        }
-
-        private bool IsPasswordCorrect()
-        {
-            return true;
+            else
+            {
+                ErrorMessage = "Le mot de passe saisie est incorrect. Demandez le au comité d'organisation.";
+            }
         }
     }
 }
