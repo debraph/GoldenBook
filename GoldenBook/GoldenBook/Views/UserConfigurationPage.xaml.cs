@@ -19,5 +19,10 @@ namespace GoldenBook.Views
         {
             ViewModel?.ContinueCommand?.Execute(null);
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }
