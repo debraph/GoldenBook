@@ -14,9 +14,7 @@ namespace GoldenBook.ViewModel.Interfaces
 
         ICommand SendCommand { get; }
 
-        string Firstname { get; set; }
-
-        string Lastname { get; set; }
+        string Name { get; set; }
 
         string Email { get; set; }
 

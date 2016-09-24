@@ -4,7 +4,7 @@
              xmlns:conv="clr-namespace:GoldenBook.Converters;assembly=GoldenBook"
              x:Class="GoldenBook.Views.AdsDetailPage"
              x:Name="myAdsDetailPage" 
-             Title="{Binding DisplayedName}">
+             Title="{Binding Name}">
   
   <ContentPage.Resources>
     <ResourceDictionary>
