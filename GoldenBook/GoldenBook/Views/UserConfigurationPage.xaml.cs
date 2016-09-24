@@ -1,4 +1,7 @@
 ﻿
+using GoldenBook.ViewModel.Interfaces;
+using Microsoft.Practices.ServiceLocation;
+using System;
 using Xamarin.Forms;
 
 namespace GoldenBook.Views
@@ -8,6 +11,13 @@ namespace GoldenBook.Views
         public UserConfigurationPage()
         {
             InitializeComponent();
+        }
+
+        private IUserConfigurationViewModel ViewModel => ServiceLocator.Current.GetInstance<IUserConfigurationViewModel>();
+
+        private void OnButtonContinueClicked(object sender, EventArgs e)
+        {
+            ViewModel?.ContinueCommand?.Execute(null);
         }
     }
 }
