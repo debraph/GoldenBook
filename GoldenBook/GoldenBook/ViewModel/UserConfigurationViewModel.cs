@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GoldenBook.Helpers;
 using GoldenBook.ViewModel.Interfaces;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -12,9 +13,6 @@ namespace GoldenBook.ViewModel
         private string _firstName;
         private string _lastName;
         private string _password;
-
-        public static string AppSettingFirstNameKey = "GB_FirstName_Key";
-        public static string AppSettingLastNameKey = "GB_LastName_Key";
 
         public UserConfigurationViewModel()
         {
@@ -49,15 +47,12 @@ namespace GoldenBook.ViewModel
         {
             if(IsPasswordCorrect())
             {
-                SaveAppSetting(key: AppSettingFirstNameKey, value: FirstName);
-                SaveAppSetting(key: AppSettingLastNameKey,  value: LastName);
+                Settings.FirstName = FirstName;
+                Settings.LastName  = LastName;
                 
                 Application.Current.MainPage.Navigation.PopModalAsync();
             }
         }
-
-        //TODO: Fix, it doesn't work on Android
-        private void SaveAppSetting(string key, string value) => Application.Current.Properties[key] = value;
 
         private bool IsPasswordCorrect()
         {

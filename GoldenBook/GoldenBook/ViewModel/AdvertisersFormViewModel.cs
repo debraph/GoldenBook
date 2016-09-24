@@ -14,6 +14,7 @@ using GoldenBook.Model;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
 using Microsoft.WindowsAzure.MobileServices;
+using GoldenBook.Helpers;
 
 namespace GoldenBook.ViewModel
 {
@@ -23,7 +24,6 @@ namespace GoldenBook.ViewModel
         private string _email;
         private string _amount;
         private string _message;
-        private string _addedBy;
         private bool _isActivityIndicatorVisible = false;
         private ImageSource _imageSource;
         private IMediaPicker _mediaPicker = null;
@@ -67,12 +67,6 @@ namespace GoldenBook.ViewModel
         {
             get { return _amount; }
             set { Set(ref _amount, value); }
-        }
-
-        public string AddedBy
-        {
-            get { return _addedBy; }
-            set { Set(ref _addedBy, value); }
         }
 
         public string Message
@@ -134,7 +128,7 @@ namespace GoldenBook.ViewModel
                     Message = Message,
                     CreatedAt = DateTime.Now,
                     Amount = amount,
-                    AddedBy = AddedBy,
+                    AddedBy = $"{Settings.FirstName} {Settings.LastName}",
                     PhotoId = photoId,
                 };
 

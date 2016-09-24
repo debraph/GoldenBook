@@ -1,4 +1,5 @@
-﻿using GoldenBook.ViewModel;
+﻿using GoldenBook.Helpers;
+using GoldenBook.ViewModel;
 
 using Xamarin.Forms;
 
@@ -18,16 +19,10 @@ namespace GoldenBook.Views
         {
             base.OnAppearing();
 
-            if (GetAppSetting(UserConfigurationViewModel.AppSettingFirstNameKey) == null || GetAppSetting(UserConfigurationViewModel.AppSettingLastNameKey) == null)
+            if (string.IsNullOrEmpty(Settings.FirstName) || string.IsNullOrEmpty(Settings.LastName))
             {
                 await Navigation.PushModalAsync(new UserConfigurationPage(), true);
             }
-        }
-
-        private string GetAppSetting(string key)
-        {
-            if (Application.Current.Properties.ContainsKey(key)) return Application.Current.Properties[key] as string;
-            return null;
         }
     }
 }

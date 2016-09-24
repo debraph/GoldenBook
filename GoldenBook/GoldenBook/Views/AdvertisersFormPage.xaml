@@ -36,7 +36,6 @@
               <behaviors:NumberValidatorBehavior x:Name="amountValidator" />
             </Entry.Behaviors>
           </Entry>
-          <Entry x:Name="addedByEntry" Placeholder="Ajouté par" Keyboard="Text" Text="{Binding AddedBy}" />
           <StackLayout Padding="0,12,0,0" Orientation="Vertical">
             <Label x:Name="MessageLabel" Text="Message :" />
             <Editor x:Name="messageEditor" Text="{Binding Message}" Keyboard="Text" />
