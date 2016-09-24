@@ -135,14 +135,30 @@ namespace GoldenBook.ViewModel
                 await InsertAd(ad);
 
                 // On success the object is updated by the service
-                if (ad.Id != null) _page?.DisplayAlert("Succès de l'envoi", "Merci de votre soutien !", "Ok");
-                else               _page?.DisplayAlert("Echec de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
+                if (ad.Id != null)
+                {
+                    _page?.DisplayAlert("Succès de l'envoi", "Merci de votre soutien !", "Ok");
+                    ResetForm();
+                }
+                else
+                {
+                    _page?.DisplayAlert("Echec de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
+                }
             }
             catch { }
             finally
             {
                 IsActivityIndicatorVisible = false;
             }
+        }
+
+        private void ResetForm()
+        {
+            Name        = null;
+            Email       = null;
+            Amount      = null;
+            Message     = null;
+            ImageSource = null;
         }
 
         private async Task<string> InsertImage(byte[] image)
