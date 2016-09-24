@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GoldenBook.ViewModel;
 
 using Xamarin.Forms;
 
@@ -16,6 +12,22 @@ namespace GoldenBook.Views
 
             Children.Add(new AdvertisersFormPage());
             Children.Add(new AdvertisersPage());
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (GetAppSetting(UserConfigurationViewModel.AppSettingFirstNameKey) == null || GetAppSetting(UserConfigurationViewModel.AppSettingLastNameKey) == null)
+            {
+                await Navigation.PushModalAsync(new UserConfigurationPage(), true);
+            }
+        }
+
+        private string GetAppSetting(string key)
+        {
+            if (Application.Current.Properties.ContainsKey(key)) return Application.Current.Properties[key] as string;
+            return null;
         }
     }
 }

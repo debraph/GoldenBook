@@ -49,7 +49,9 @@
     <Compile Include="ViewModel\AdvertisersViewModel.cs" />
     <Compile Include="ViewModel\Interfaces\IAdvertisersFormViewModel.cs" />
     <Compile Include="ViewModel\Interfaces\IAdvertisersViewModel.cs" />
+    <Compile Include="ViewModel\Interfaces\IUserConfigurationViewModel.cs" />
     <Compile Include="ViewModel\IoC\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\UserConfigurationViewModel.cs" />
     <Compile Include="Views\AdsDetailPage.xaml.cs">
       <DependentUpon>AdsDetailPage.xaml</DependentUpon>
     </Compile>
@@ -61,6 +63,9 @@
     </Compile>
     <Compile Include="Views\MainTabbedPage.xaml.cs">
       <DependentUpon>MainTabbedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserConfigurationPage.xaml.cs">
+      <DependentUpon>UserConfigurationPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +181,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AdsDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\UserConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

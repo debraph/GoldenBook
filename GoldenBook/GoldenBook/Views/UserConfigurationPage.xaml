@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GoldenBook;assembly=GoldenBook"
+             xmlns:behaviors="clr-namespace:GoldenBook.Behaviors;assembly=GoldenBook"
+             x:Class="GoldenBook.Views.UserConfigurationPage"
+             Title="Configuration initiale"
+             BindingContext="{Binding Source={x:Static local:App.Locator}, Path=UserConfiguration}">
+  
+  <Grid VerticalOptions="Center" HorizontalOptions="Center">
+    
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Label Text="Ton prénom" Grid.Row="0" Grid.Column="0" />
+    <Entry Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" />
+
+    <Label Text="Ton nom" Grid.Row="1" Grid.Column="0" />
+    <Entry Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" />
+
+    <Label Text="Le mot de passe" Grid.Row="2" Grid.Column="0" />
+    <Entry Text="{Binding Password}" Grid.Row="2" Grid.Column="1" IsPassword="True" />
+
+    <Button Text="Continuer" Command="{Binding ContinueCommand}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+
+  </Grid>
+  
+</ContentPage>

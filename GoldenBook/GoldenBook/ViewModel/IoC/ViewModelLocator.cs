@@ -13,10 +13,12 @@ namespace GoldenBook.ViewModel.IoC
 
             SimpleIoc.Default.Register<IAdvertisersViewModel, AdvertisersViewModel>();
             SimpleIoc.Default.Register<IAdvertisersFormViewModel, AdvertisersFormViewModel>();
+            SimpleIoc.Default.Register<IUserConfigurationViewModel, UserConfigurationViewModel>();
         }
 
-        public IAdvertisersViewModel Advertisers         => ServiceLocator.Current.GetInstance<IAdvertisersViewModel>();
-        public IAdvertisersFormViewModel AdvertisersForm => ServiceLocator.Current.GetInstance<IAdvertisersFormViewModel>();
-        public IMediaService MediaService                => ServiceLocator.Current.GetInstance<IMediaService>();
+        public IAdvertisersViewModel Advertisers             => ServiceLocator.Current.GetInstance<IAdvertisersViewModel>();
+        public IAdvertisersFormViewModel AdvertisersForm     => ServiceLocator.Current.GetInstance<IAdvertisersFormViewModel>();
+        public IUserConfigurationViewModel UserConfiguration => ServiceLocator.Current.GetInstance<IUserConfigurationViewModel>();
+        public IMediaService MediaService                    => ServiceLocator.Current.GetInstance<IMediaService>();
     }
 }
