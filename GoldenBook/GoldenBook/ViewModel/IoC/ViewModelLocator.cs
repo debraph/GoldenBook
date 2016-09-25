@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
+using GoldenBook.CommonServices;
 using GoldenBook.ServiceContract;
 using GoldenBook.ViewModel.Interfaces;
 using Microsoft.Practices.ServiceLocation;
@@ -14,6 +15,7 @@ namespace GoldenBook.ViewModel.IoC
             SimpleIoc.Default.Register<IAdvertisersViewModel, AdvertisersViewModel>();
             SimpleIoc.Default.Register<IAdvertisersFormViewModel, AdvertisersFormViewModel>();
             SimpleIoc.Default.Register<IUserConfigurationViewModel, UserConfigurationViewModel>();
+            SimpleIoc.Default.Register<IRestClient, RestClient>();
         }
 
         public IAdvertisersViewModel Advertisers             => ServiceLocator.Current.GetInstance<IAdvertisersViewModel>();
