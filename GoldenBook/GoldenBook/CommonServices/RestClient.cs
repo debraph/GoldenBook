@@ -16,12 +16,15 @@ namespace GoldenBook.CommonServices
 
         private MobileServiceClient MobileService => new MobileServiceClient("https://goldenbook.azurewebsites.net");
         private string Sas                        => "https://goldenbook.blob.core.windows.net/golden-book-photos?sv=2015-04-05&sr=c&sig=hnDVgepWpsAbX7Lj9o1h%2FgN7t3Va3A3meBGoMejx%2Fwc%3D&se=2017-08-18T19%3A13%3A55Z&sp=rwdl";
+        private int MaxLimit                      => 50;
 
-        public async Task<List<Ad>> GetAds(int limit = int.MaxValue)
+        public async Task<List<Ad>> GetAds(int limit = 50)
         {
             try
             {
-                return await MobileService.GetTable<Ad>().OrderByDescending(a => a.CreatedAt).ToListAsync();
+                if (limit > MaxLimit) limit = MaxLimit;
+                var ads = await MobileService.GetTable<Ad>().Take(limit).OrderByDescending(a => a.CreatedAt).ToListAsync();
+                return ads;
             }
             catch
             {
