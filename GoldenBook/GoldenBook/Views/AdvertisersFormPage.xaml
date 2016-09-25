@@ -13,34 +13,49 @@
       <conv:BooleanInverterConverter x:Key="booleanInverter" />
     </ResourceDictionary>
   </ContentPage.Resources>
-
-  <Grid>
     
     <ScrollView>
 
-      <StackLayout VerticalOptions="Start" Padding="10">
+      <StackLayout VerticalOptions="StartAndExpand" Padding="10">
 
-        <StackLayout Padding="0,0,0,10">
-          <Entry x:Name="nameEntry" Placeholder="Nom du sponsor" Keyboard="Text" Text="{Binding Name}">
+        <Grid Padding="0,10,0,10">
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+
+          <Label Text="Nom" Grid.Row="0" Grid.Column="0" />
+          <Entry x:Name="nameEntry" Keyboard="Text" Text="{Binding Name}" Grid.Row="0" Grid.Column="1">
             <Entry.Behaviors>
-              <behaviors:TextValidatorBehavior x:Name="nameValidator" /> <!-- At least the name must be filled -->
+              <behaviors:TextValidatorBehavior x:Name="nameValidator" />
             </Entry.Behaviors>
           </Entry>
-          <Entry x:Name="emailEntry" Placeholder="Adresse e-mail du sponsor" Keyboard="Email" Text="{Binding Email}">
+
+          <Label Text="Adresse e-mail" Grid.Row="1" Grid.Column="0" />
+          <Entry x:Name="emailEntry" Keyboard="Email" Text="{Binding Email}" Grid.Row="1" Grid.Column="1">
             <Entry.Behaviors>
               <behaviors:EmailValidatorBehavior x:Name="emailValidator" IsNullAllowed="True" />
             </Entry.Behaviors>
           </Entry>
-          <Entry x:Name="amountEntry" Placeholder="Montant du don" Keyboard="Numeric" Text="{Binding Amount}">
+
+          <Label Text="Montant (CHF)" Grid.Row="2" Grid.Column="0" />
+          <Entry x:Name="amountEntry" Keyboard="Numeric" Text="{Binding Amount}" Grid.Row="2" Grid.Column="1">
             <Entry.Behaviors>
               <behaviors:NumberValidatorBehavior x:Name="amountValidator" />
             </Entry.Behaviors>
           </Entry>
-          <StackLayout Padding="0,12,0,0" Orientation="Vertical">
-            <Label x:Name="MessageLabel" Text="Message :" />
-            <Editor x:Name="messageEditor" Text="{Binding Message}" Keyboard="Text" />
-          </StackLayout>
-        </StackLayout>
+          
+          <Label x:Name="MessageLabel" Text="Message" Grid.Row="3" Grid.Column="0" />
+          <Editor x:Name="messageEditor" Text="{Binding Message}" Keyboard="Text" Grid.Row="3" Grid.Column="1" />
+          
+        </Grid>
 
         <Grid Padding="0,10,0,0">
           <ActivityIndicator HorizontalOptions="Center"
@@ -49,6 +64,7 @@
                              x:Name="syncIndicator"/>
         
           <StackLayout Padding="0" IsVisible="{Binding IsActivityIndicatorVisible, Converter={StaticResource booleanInverter}}">
+            
             <Button Text="Prendre une photo" Command="{Binding TakePictureCommand}" />
             
             <!-- The property IsEnabled is ignored when the Button is directly binded to an ICommand, so the command is called from the Click event -->
@@ -64,13 +80,13 @@
                 </MultiTrigger>
               </Button.Triggers>
             </Button>
+            
             <Image Source="{Binding ImageSource}" />
+            
           </StackLayout>
         </Grid>
 
       </StackLayout>
     </ScrollView>
-  
-  </Grid>
 
 </ContentPage>
