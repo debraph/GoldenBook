@@ -39,6 +39,7 @@
     <Compile Include="Behaviors\EmailValidatorBehavior.cs" />
     <Compile Include="Behaviors\NumberValidatorBehavior.cs" />
     <Compile Include="Behaviors\TextValidatorBehavior.cs" />
+    <Compile Include="CommonServices\RestClient.cs" />
     <Compile Include="Converters\BooleanInverterConverter.cs" />
     <Compile Include="Converters\NullToBooleanConverter.cs" />
     <Compile Include="Helpers\ActivityIndicatorDisposable.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="Model\Ad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceContract\IMediaService.cs" />
+    <Compile Include="ServiceContract\IRestClient.cs" />
     <Compile Include="ViewModel\AdvertisersFormViewModel.cs" />
     <Compile Include="ViewModel\AdvertisersViewModel.cs" />
     <Compile Include="ViewModel\Interfaces\IAdvertisersFormViewModel.cs" />

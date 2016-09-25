@@ -33,9 +33,14 @@ namespace GoldenBook.ViewModel
         private Page _page;
 
         private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+        private IRestClient _restClient;
+        private IMediaService _mediaService;
 
-        public AdvertisersFormViewModel()
+        public AdvertisersFormViewModel(IRestClient restClient, IMediaService mediaService)
         {
+            _restClient  = restClient;
+            _mediaService = mediaService;
+
             TakePictureCommand = new RelayCommand(() => TakePicture());
             SendCommand = new RelayCommand(() => Send());
 
@@ -100,8 +105,6 @@ namespace GoldenBook.ViewModel
 
         public byte[] ImageByteArray { get; private set; }
 
-        private IMediaService MediaService => ServiceLocator.Current.GetInstance<IMediaService>();
-
         private async void Send()
         {
             try
@@ -116,9 +119,13 @@ namespace GoldenBook.ViewModel
                 if(ImageByteArray != null)
                 {
                     var image = ImageByteArray;
-                    photoId = await InsertImage(image);
+                    photoId = await _restClient.SendPhoto(image);
 
-                    if (photoId == null) return;
+                    if (photoId == null)
+                    {
+                        await _page?.DisplayAlert("Erreur lors de l'envoi de la photo", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
+                        return;
+                    }
                 }
 
                 Ad ad = new Ad()
@@ -132,17 +139,16 @@ namespace GoldenBook.ViewModel
                     PhotoId = photoId,
                 };
 
-                await InsertAd(ad);
+                var sendResult = await _restClient.SendAd(ad);
 
-                // On success the object is updated by the service
-                if (ad.Id != null)
+                if(sendResult && ad.Id != null)
                 {
                     _page?.DisplayAlert("Succès de l'envoi", "Merci de votre soutien !", "Ok");
                     ResetForm();
                 }
                 else
                 {
-                    _page?.DisplayAlert("Echec de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
+                    await _page?.DisplayAlert("Erreur lors de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
                 }
             }
             catch { }
@@ -161,48 +167,6 @@ namespace GoldenBook.ViewModel
             ImageSource = null;
         }
 
-        private async Task<string> InsertImage(byte[] image)
-        {
-            try
-            {
-                CloudBlobContainer container = new CloudBlobContainer(new Uri(Sas));
-
-                var guid = Guid.NewGuid().ToString("n");
-                string photoId = $"photo-{guid}";
-
-                CloudBlockBlob blob = container.GetBlockBlobReference(photoId);
-
-                MemoryStream msWrite = new
-                MemoryStream(image);
-                msWrite.Position = 0;
-                using (msWrite)
-                {
-                    await blob.UploadFromStreamAsync(msWrite);
-                }
-                return photoId;
-            }
-            catch (Exception ex)
-            {
-                await _page?.DisplayAlert("Erreur lors de l'envoi de la photo", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
-                return null;
-            }
-        }
-
-        private async Task InsertAd(Ad ad)
-        {
-            try
-            {
-                await MobileService.GetTable<Ad>().InsertAsync(ad); //TODO: Move it into a dedicated class (RestClient)
-            }
-            catch (Exception ex)
-            {
-                await _page?.DisplayAlert("Erreur lors de l'envoi", "Réessayer et si le problème persiste contacter le comité d'organisation.", "Ok");
-            }
-        }
-
-        private MobileServiceClient MobileService => new MobileServiceClient("https://goldenbook.azurewebsites.net");
-        private string Sas => "https://goldenbook.blob.core.windows.net/golden-book-photos?sv=2015-04-05&sr=c&sig=hnDVgepWpsAbX7Lj9o1h%2FgN7t3Va3A3meBGoMejx%2Fwc%3D&se=2017-08-18T19%3A13%3A55Z&sp=rwdl";
-
         private async Task TakePictureAsync()
         {
             SetupMediaPicker();
@@ -220,7 +184,7 @@ namespace GoldenBook.ViewModel
                     var result = t.Result;
                     var needXMirroring = false; //TODO: Determine if the photo is a selfie
 
-                    var mediaResult = MediaService.ProcessCapturedPhoto(result.Path, needXMirroring);
+                    var mediaResult = _mediaService.ProcessCapturedPhoto(result.Path, needXMirroring);
 
                     var filePath = mediaResult.Item1;
                     ImageByteArray = mediaResult.Item2;

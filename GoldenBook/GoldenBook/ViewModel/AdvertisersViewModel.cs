@@ -15,12 +15,14 @@ namespace GoldenBook.ViewModel
     public class AdvertisersViewModel : ViewModelBase, IAdvertisersViewModel
     {
         private List<Ad> _ads;
+        private IMediaService _mediaService;
+        private IRestClient _restClient;
 
-        public AdvertisersViewModel()
-        { }
-
-        private MobileServiceClient MobileService => new MobileServiceClient("https://goldenbook.azurewebsites.net");
-        private string Sas => "https://goldenbook.blob.core.windows.net/golden-book-photos?sv=2015-04-05&sr=c&sig=hnDVgepWpsAbX7Lj9o1h%2FgN7t3Va3A3meBGoMejx%2Fwc%3D&se=2017-08-18T19%3A13%3A55Z&sp=rwdl";
+        public AdvertisersViewModel(IRestClient restClient, IMediaService mediaService)
+        {
+            _restClient   = restClient;
+            _mediaService = mediaService;
+        }
 
         public List<Ad> Ads
         {
@@ -32,7 +34,7 @@ namespace GoldenBook.ViewModel
         {
             try
             {
-                Ads = await MobileService.GetTable<Ad>().OrderByDescending(a => a.CreatedAt).ToListAsync();
+                Ads = await _restClient.GetAds();
 
                 foreach(Ad ad in Ads)
                 {
@@ -45,30 +47,20 @@ namespace GoldenBook.ViewModel
             }
         }
 
-        private IMediaService MediaService => ServiceLocator.Current.GetInstance<IMediaService>();
-
         private async Task<ImageSource> LoadPicture(string photoId)
         {
             if (photoId == null) return null;
 
-            string pictureFilePath   = MediaService.GetFilepath(photoId);
-            string thumbnailFilePath = MediaService.GetFilepath($"{photoId}_thumb");
+            string pictureFilePath   = _mediaService.GetFilepath(photoId);
+            string thumbnailFilePath = _mediaService.GetFilepath($"{photoId}_thumb");
 
             if (pictureFilePath == null || thumbnailFilePath == null)
             {
-                CloudBlobContainer container = new CloudBlobContainer(new Uri(Sas));
+                var pictureByteArray = await _restClient.GetPhoto(photoId);
 
-                CloudBlockBlob blockBlob = container.GetBlockBlobReference(photoId);
+                if (pictureByteArray == null || pictureByteArray.Length == 0) return null;
 
-                await blockBlob.FetchAttributesAsync();
-
-                long fileByteLength = blockBlob.Properties.Length;
-
-                var pictureByteArray = new byte[fileByteLength];
-
-                await blockBlob.DownloadToByteArrayAsync(pictureByteArray, 0);
-
-                pictureFilePath = MediaService.SavePictureAndThumbnail(pictureByteArray, photoId);
+                pictureFilePath = _mediaService.SavePictureAndThumbnail(pictureByteArray, photoId);
 
                 if (pictureFilePath == null) return null;
 
