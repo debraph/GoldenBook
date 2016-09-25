@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <style name="csTheme" parent="android:Theme.Material.Light">
+    <item name="android:statusBarColor">@android:color/transparent</item>
+
+    <item name="android:windowBackground">@color/windowBackground</item>
+
+    <item name="android:colorPrimary">@color/colorPrimary</item>
+    <item name="android:colorAccent">@color/colorAccent</item>
+
+    <item name="android:textColor">@color/textColor</item>
+    <item name="android:textColorPrimary">@color/textColorPrimary</item>
+
+    <item name="android:buttonStyle">@style/csButton</item>
+    
+    <item name="android:editTextStyle">@style/csEditText</item>
+    
+    <item name="android:colorControlHighlight">@color/colorAccent</item>
+    <item name="android:colorActivatedHighlight">@color/colorAccent</item>
+    <item name="android:colorPressedHighlight">@color/colorAccent</item>
+    <item name="android:colorLongPressedHighlight">@color/colorAccent</item>
+    <item name="android:colorFocusedHighlight">@color/colorAccent</item>
+  </style>
+  
+  <style name="csButton" parent="Widget.AppCompat.Button.Colored">
+    <item name="android:textColor">@color/buttonFontColor</item>
+  </style>
+  
+  <style name="csEditText" parent="@android:style/Widget.EditText">
+    <item name="android:textColor">@color/editTextFontColor</item>
+  </style>
+  
+</resources>
