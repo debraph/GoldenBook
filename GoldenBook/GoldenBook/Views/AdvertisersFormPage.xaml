@@ -81,10 +81,10 @@
               </Button.Triggers>
             </Button>
             
-            <Image Source="{Binding ImageSource}" />
-            
           </StackLayout>
         </Grid>
+
+        <Image Source="{Binding ImageSource}" HorizontalOptions="Center" />
 
       </StackLayout>
     </ScrollView>
