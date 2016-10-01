@@ -22,8 +22,6 @@
 	<string>6.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>ch.ragu.GoldenBook</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>Livre d&apos;or</string>
 	<key>CFBundleShortVersionString</key>
@@ -32,5 +30,7 @@
 	<string>1</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImage.launchimage</string>
 </dict>
 </plist>
