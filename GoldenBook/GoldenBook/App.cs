@@ -17,8 +17,12 @@ namespace GoldenBook
 
         public App()
         {
-            // The root page of your application
-            MainPage = new NavigationPage(new MainTabbedPage());
+			// The root page of your application
+			MainPage = new NavigationPage(new MainTabbedPage())
+			{
+				BarBackgroundColor = Color.FromHex("0095dd"),
+				BarTextColor = Color.White
+			};
         }
 
         protected override void OnStart()

@@ -26,7 +26,11 @@ namespace GoldenBook.iOS
 
             LoadApplication(new App());
 
-            return base.FinishedLaunching(app, options);
+            var result = base.FinishedLaunching(app, options);
+
+			UIApplication.SharedApplication.KeyWindow.TintColor = UIColor.FromRGB(0.0f, 0.58f, 0.86f);
+
+			return result;
         }
 
         void SetIoc()
