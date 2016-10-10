@@ -21,7 +21,7 @@
 	<key>MinimumOSVersion</key>
 	<string>6.0</string>
 	<key>CFBundleIdentifier</key>
-	<string>ch.ragu.GoldenBook</string>
+	<string>ch.ragu.goldenbook</string>
 	<key>CFBundleName</key>
 	<string>Livre d&apos;or</string>
 	<key>CFBundleShortVersionString</key>
