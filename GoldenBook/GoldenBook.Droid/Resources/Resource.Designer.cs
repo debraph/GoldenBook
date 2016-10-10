@@ -27,8 +27,6 @@ namespace GoldenBook.Droid
 		public static void UpdateIdValues()
 		{
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::GoldenBook.Droid.Resource.Attribute.actionBarSize;
-			global::XLabs.Platform.Resource.String.ApplicationName = global::GoldenBook.Droid.Resource.String.ApplicationName;
-			global::XLabs.Platform.Resource.String.Hello = global::GoldenBook.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Animation
@@ -2947,12 +2945,6 @@ namespace GoldenBook.Droid
 		
 		public partial class String
 		{
-			
-			// aapt resource value: 0x7f080027
-			public const int ApplicationName = 2131230759;
-			
-			// aapt resource value: 0x7f080026
-			public const int Hello = 2131230758;
 			
 			// aapt resource value: 0x7f08000f
 			public const int abc_action_bar_home_description = 2131230735;
