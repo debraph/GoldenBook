@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using System;
 using GoldenBook.Model;
 using GoldenBook.Helpers;
+using Plugin.Media;
 
 namespace GoldenBook.ViewModel
 {
@@ -163,7 +164,20 @@ namespace GoldenBook.ViewModel
         {
             ImageSource = null;
 
-            return;
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported) return;
+
+            ImageSource = null;
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Front });
+
+            var mediaResult = _mediaService.ProcessCapturedPhoto(file.Path);
+
+            var filePath = mediaResult.Item1;
+            ImageByteArray = mediaResult.Item2;
+
+            ImageSource = ImageSource.FromFile(filePath);
         }
     }
 }
