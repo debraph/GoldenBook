@@ -177,10 +177,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="XLabs.Serialization, Version=2.2.0.38178, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\XLabs.Serialization.2.2.0-pre05\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
