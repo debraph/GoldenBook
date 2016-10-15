@@ -81,13 +81,36 @@ namespace GoldenBook.iOS.Services
 
 		UIImage ScaleAndRotateImage(UIImage imageIn, UIImageOrientation orIn)
 		{
+			int kMaxResolution = 2048;
+
 			CGImage imgRef = imageIn.CGImage;
 			float width = imgRef.Width;
 			float height = imgRef.Height;
 			CGAffineTransform transform = CGAffineTransform.MakeIdentity();
 			RectangleF bounds = new RectangleF(0, 0, width, height);
 
-			switch (orIn)
+			if (width > kMaxResolution || height > kMaxResolution)
+			{
+				float ratio = width / height;
+
+				if (ratio > 1)
+				{
+					bounds.Width = kMaxResolution;
+					bounds.Height = bounds.Width / ratio;
+				}
+				else
+				{
+					bounds.Height = kMaxResolution;
+					bounds.Width = bounds.Height * ratio;
+				}
+			}
+
+			float scaleRatio = bounds.Width / width;
+			SizeF imageSize = new SizeF(width, height);
+			UIImageOrientation orient = orIn;
+			float boundHeight;
+
+			switch (orient)
 			{
 				case UIImageOrientation.Up:                                        //EXIF = 1
 					transform = CGAffineTransform.MakeIdentity();
