@@ -153,11 +153,12 @@ namespace GoldenBook.ViewModel
 
         private void ResetForm()
         {
-            Name        = null;
-            Email       = null;
-            Amount      = null;
-            Message     = null;
-            ImageSource = null;
+            Name           = null;
+            Email          = null;
+            Amount         = null;
+            Message        = null;
+            ImageSource    = null;
+			ImageByteArray = null;
         }
 
         private async Task TakePictureAsync()
