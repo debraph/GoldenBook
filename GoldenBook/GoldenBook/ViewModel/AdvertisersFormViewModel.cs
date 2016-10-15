@@ -2,19 +2,13 @@
 using GalaSoft.MvvmLight.Command;
 using GoldenBook.ServiceContract;
 using GoldenBook.ViewModel.Interfaces;
-using Microsoft.Practices.ServiceLocation;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using XLabs.Ioc;
-using XLabs.Platform.Device;
-using XLabs.Platform.Services.Media;
 using System;
 using GoldenBook.Model;
-using Microsoft.WindowsAzure.Storage.Blob;
-using System.IO;
-using Microsoft.WindowsAzure.MobileServices;
 using GoldenBook.Helpers;
+using Plugin.Media;
 
 namespace GoldenBook.ViewModel
 {
@@ -26,7 +20,6 @@ namespace GoldenBook.ViewModel
         private string _message;
         private bool _isActivityIndicatorVisible = false;
         private ImageSource _imageSource;
-        private IMediaPicker _mediaPicker = null;
         private ICommand _takePictureCommand;
         private ICommand _sendCommand;
 
@@ -169,44 +162,22 @@ namespace GoldenBook.ViewModel
 
         private async Task TakePictureAsync()
         {
-            SetupMediaPicker();
+            ImageSource = null;
+
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported) return;
 
             ImageSource = null;
 
-            await _mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Front, MaxPixelDimension = 400 }).ContinueWith(t =>
-            {
-                if (t.IsFaulted) { var s = t.Exception.InnerException.ToString(); }
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Front });
 
-                else if (t.IsCanceled) { }
+            var mediaResult = _mediaService.ProcessCapturedPhoto(file.Path);
 
-                else
-                {
-                    var result = t.Result;
-                    var needXMirroring = false; //TODO: Determine if the photo is a selfie
+            var filePath = mediaResult.Item1;
+            ImageByteArray = mediaResult.Item2;
 
-                    var mediaResult = _mediaService.ProcessCapturedPhoto(result.Path, needXMirroring);
-
-                    var filePath = mediaResult.Item1;
-                    ImageByteArray = mediaResult.Item2;
-
-                    ImageSource = ImageSource.FromFile(filePath);
-
-                    return result.Source;
-                }
-
-                return null;
-            }, _scheduler);
-        }
-
-        private void SetupMediaPicker()
-        {
-            if (_mediaPicker != null) return;
-
-            var device = Resolver.Resolve<IDevice>();
-
-            _mediaPicker = DependencyService.Get<IMediaPicker>();
-            //RM: hack for working on windows phone? 
-            if (_mediaPicker == null) _mediaPicker = device.MediaPicker;
+            ImageSource = ImageSource.FromFile(filePath);
         }
     }
 }
