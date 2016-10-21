@@ -59,8 +59,9 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Raphael Guye (QQP86RXPPB)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+<CodesignProvision>24364b30-3021-494c-86a4-a2ed92fca534</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
