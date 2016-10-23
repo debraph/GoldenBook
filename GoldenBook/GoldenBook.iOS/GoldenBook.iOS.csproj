@@ -233,6 +233,13 @@
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\1536x2048.png">
       <InProject>false</InProject>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\LaunchImage320x480.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\LaunchImage640x960.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\LaunchImage640x1136.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\LaunchImage758x1004.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\LaunchImage758x1024.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\LaunchImage1536x2008.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\LaunchImage1536x2048.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\listItems.png" />
